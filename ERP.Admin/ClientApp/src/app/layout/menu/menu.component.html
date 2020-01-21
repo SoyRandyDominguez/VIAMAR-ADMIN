@@ -1,0 +1,328 @@
+<ul class="navbar-nav sidebar sidebar-light accordion shadow-sm   .animated--fade-in " [ngClass]="{'toggled': MenuClose}" id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]='["/home"]'>
+    <!--<div class="sidebar-brand-icon rotate-n-15">-->
+    <div class="sidebar-brand-icon">
+      <img src=".././../../assets/img/LogoMAR.png" style="width:100px;" alt="" />
+    </div>
+
+    <!--<div class="sidebar-brand-text mx-3">MARADMIN <sup>v2</sup></div>-->
+    <div class="sidebar-brand-text mx-3" style="font-size:10px!important;">
+    </div>
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0">
+
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item  " [routerLinkActive]='["active"]'>
+    <a class="nav-link" [routerLink]='["/dashboard"]' style="color:black!important;">
+      <!--<i class="fas fa-fw fa-tachometer-alt"></i>-->
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#2196f3 !important">home</i>
+      <span>
+        Dashboard
+      </span>
+    </a>
+  </li>
+
+
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Riferos', 'CrearRiferos', 'EliminarRiferos', 'EditarRiferos', 'BalanceRiferos','Banca',
+           'EditarBancas', 'MensajeGeneral', 'MensajeDirecto', 'Zonas', 'CrearZonas', 'EditarZonas', 'EliminarZonas' , 'Cuentas', 'Grupos']">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCentral" aria-expanded="true" aria-controls="collapseCentral" style="color:black!important;">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#4e73df  !important;">account_balance</i>
+      <span>Central</span>
+    </a>
+    <div id="collapseCentral" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <!--<h6 class="collapse-header">Login Screens:</h6>-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/bancas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'EditarBancas', 'MensajeGeneral', 'MensajeDirecto']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#1cc88a !important;">computer</i>
+          <span>
+            Bancas
+          </span>
+        </a>
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/riferos"]' style="color:black!important;" *ngxPermissionsOnly=" ['Admin', 'Riferos', 'CrearRiferos', 'EliminarRiferos', 'EditarRiferos', 'BalanceRiferos']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#1cc88a !important;">home</i>
+          <span>
+            Riferos
+          </span>
+        </a>
+        <!--<a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/zonas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'Zonas','CrearZonas','EditarZonas','EliminarZonas']">-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/zonas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'Zonas', 'CrearZonas', 'EditarZonas', 'EliminarZonas']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#1cc88a !important;">vpn_lock</i>
+          <span>
+            Zonas
+          </span>
+        </a>
+        <!--<a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/cuentas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'Cuentas']">-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/cuentas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'Cuentas']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#1cc88a !important;">account_box</i>
+          <span>
+            Cuentas
+          </span>
+        </a>
+        <!--<a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/grupos"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'Grupos']">-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/grupos"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'Grupos']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#1cc88a !important;">group_work</i>
+          <span>
+            Grupos
+          </span>
+        </a>
+        <!--<div class="collapse-divider"></div>
+        <h6 class="collapse-header">Other Pages:</h6>-->
+      </div>
+    </div>
+  </li>
+
+
+
+
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Controles']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Limites', 'LimiteNumeros', 'LimiteSorteos']">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLimites" aria-expanded="true" aria-controls="collapseLimites">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#e91e63  !important;">people</i>
+      <span>Limites</span>
+    </a>
+    <div id="collapseLimites" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <!--<h6 class="collapse-header">Login Screens:</h6>-->
+        <!--<a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/controles"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'Controles']">-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/limites/numeros"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'LimiteNumeros']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#0f9aee !important;">stop_screen_share</i>
+          <span>
+            Controles de números
+          </span>
+        </a>
+
+        <!--<a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/limites-sorteo"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'LimitesSorteos']">-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/limites/globales"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'LimiteSorteos']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#0f9aee !important;">stop_screen_share</i>
+          <span>
+            Limites de loterias
+          </span>
+        </a>
+
+
+      </div>
+    </div>
+  </li>
+
+
+
+  <!--<li class="nav-item" [routerLinkActive]='["active"]'>
+    <a class="nav-link" [routerLink]='["/esquemas"]' style="color:black!important;">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#1cc88a !important;">attach_money</i>
+      <span>
+        Grupos de esquemas
+      </span>
+    </a>
+  </li>-->
+  <!-- Nav Item - Charts -->
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'CrearUsuarios','EditarUsuarios','EliminarUsuarios']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]'>
+    <a class="nav-link" [routerLink]='["/usuarios"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'CrearUsuarios', 'EditarUsuarios', 'EliminarUsuarios']">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#4e73df  !important;">emoji_people</i>
+      <span>
+        Usuarios
+      </span>
+    </a>
+  </li>
+
+
+
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'CerrarVentas','GuardarPremios','CorregirPremios','ReiniciarVentas','NoLaborable']">
+    <a class="nav-link" [routerLink]='["/sorteos"]' style="color:black!important;">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#4e73df  !important;">casino</i>
+      <span>
+        Loterias
+      </span>
+    </a>
+  </li>-->
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Controles']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Sorteos', 'CerrarVentas', 'GuardarPremios', 'CorregirPremios', 'ReiniciarVentas', 'NoLaborable']">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLoterias" aria-expanded="true" aria-controls="collapseLoterias">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#e91e63  !important;">casino</i>
+      <span>Loterias</span>
+    </a>
+    <div id="collapseLoterias" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <!--<h6 class="collapse-header">Login Screens:</h6>-->
+        <!--<a class="collapse-item" [routerLink]='["/sorteos"]' [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'CerrarVentas','GuardarPremios','CorregirPremios','ReiniciarVentas','NoLaborable']">-->
+        <a class="collapse-item" [routerLink]='["/sorteos"]' [routerLinkActive]='["active"]' *ngxPermissionsOnly="['CerrarVentas', 'GuardarPremios', 'CorregirPremios', 'ReiniciarVentas', 'NoLaborable']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#4e73df !important;">casino</i>
+          <span>
+            Administración
+          </span>
+        </a>
+
+        <!--<a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/configuraciones-sorteo"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'LimitesSorteos']">-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/configuraciones-sorteo"]' style="color:black!important;" *ngxPermissionsOnly="[]">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#0f9aee !important;">casino</i>
+          <span>
+            Configuraciones
+          </span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Nav Item - Charts -->
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Alertas']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Alertas']">
+    <a class="nav-link" [routerLink]='["/alertas"]' style="color:black!important;">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:red  !important;">warning</i>
+      <span>
+        Alertas
+      </span>
+    </a>
+  </li>
+
+
+  <!-- Nav Item - Charts -->
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'ConfiguracionesGenerales','EsquemasPrecios']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Configuraciones', 'ConfiguracionesGenerales']">
+    <a class="nav-link" [routerLink]='["/configuraciones/generales"]' style="color:black!important;">
+      <i class="fas fa-fw fa-cog" style="color:black  !important;"></i>
+      <span>Configuraciones</span>
+    </a>
+  </li>
+
+  <!-- Nav Item - Charts -->
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'ConfiguracionesGenerales','EsquemasPrecios']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'EsquemasPrecios']">
+    <a class="nav-link" [routerLink]='["/configuraciones/precios"]' style="color:black!important;">
+      <i class="fas fa-fw fa-money-bill" style="color:black  !important;"></i>
+      <span>Precios</span>
+    </a>
+  </li>
+
+
+
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="[]">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes" aria-expanded="true" aria-controls="collapseReportes">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#4e73df  !important;">insert_drive_file</i>
+      <span>Reportes</span>
+    </a>
+    <div id="collapseReportes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <!--<h6 class="collapse-header">Login Screens:</h6>-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/ventas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'ReporteVenta']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#673ab7 !important;">insert_drive_file</i>
+          <span>
+            Ventas
+          </span>
+        </a>
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/transsaciones"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'ReporteTransacciones']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:blue  !important;">compare_arrows</i>
+          <span>
+            transacciones
+          </span>
+        </a>
+
+
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/recargas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'ReporteRecargas']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:chartreuse  !important;">mobile_friendly</i>
+          <span>
+            Recargas
+          </span>
+        </a>
+        <!--<h6 class="collapse-header">Flujo Efectivo:</h6>-->
+      </div>
+    </div>
+  </li>
+
+
+
+
+
+  <!-- Divider -->
+  <hr class="sidebar-divider" *ngxPermissionsOnly="['Admin', 'Flujo', 'Movimientos', 'IngresosGastos']">
+
+  <!-- Heading -->
+  <div class="sidebar-heading" *ngxPermissionsOnly="['Admin', 'Flujo', 'Movimientos', 'IngresosGastos']">
+    Flujo Efectivo
+  </div>
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Flujo', 'Movimientos', 'IngresosGastos']">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCaja" aria-expanded="true" aria-controls="collapseCaja">
+      <i class="fas fa-fw fa-cash-register"></i>
+      <span>Caja</span>
+    </a>
+    <div id="collapseCaja" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <!--<h6 class="collapse-header">Login Screens:</h6>-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/flujo/movimientos"]' *ngxPermissionsOnly="['Admin', 'Movimientos']">
+          <i class="fas fa-fw fa-exchange-alt" style="color:black  !important;"></i>
+          <span>Movimientos</span>
+        </a>
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/flujo/ingresos-gastos"]' *ngxPermissionsOnly="['Admin', 'IngresosGastos']">
+          <i class="fas fa-fw fa-money-check-alt" style="color:black  !important;"></i> <span>
+            Ingresos y Gastos
+          </span>
+        </a>
+        <!--<div class="collapse-divider"></div>
+        <h6 class="collapse-header">Other Pages:</h6>-->
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly=" []">
+    <a class="nav-link" [routerLink]='["/flujo/rutas"]' style="color:black!important;">
+      <i class="fas fa-fw fa-road" style="color:black  !important;"></i>
+      <span>Rutas</span>
+    </a>
+  </li>
+
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="[]">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFlujoReportes" aria-expanded="true" aria-controls="collapseFlujoReportes">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#4e73df  !important;">insert_drive_file</i>
+      <span>Reportes</span>
+    </a>
+    <div id="collapseFlujoReportes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/flujo/reportes/faltantesysobrantes"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'ReporteVenta']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#673ab7 !important;">insert_drive_file</i>
+          <span>
+            Faltantes y sobrantes
+          </span>
+        </a>
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/flujo/reportes/rutas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'ReporteVenta']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#673ab7 !important;">insert_drive_file</i>
+          <span>
+            Rutas
+          </span>
+        </a>  
+
+      </div>
+    </div>
+  </li>
+
+
+  <!-- Divider -->
+  <hr class="sidebar-divider d-none d-md-block">
+
+  <!-- Sidebar Toggler (Sidebar) -->
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle" (click)="toogleMenu()"></button>
+  </div>
+
+</ul>
+<!-- End of Sidebar -->
