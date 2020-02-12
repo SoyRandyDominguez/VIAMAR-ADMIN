@@ -46,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\login\Components\" />
     <Folder Include="ClientApp\src\app\Models\Alertas\" />
     <Folder Include="System\Web\" />
   </ItemGroup>

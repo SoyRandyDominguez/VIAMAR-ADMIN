@@ -10,8 +10,8 @@ import { BaseService, DataApi } from '../../Services/HTTPClient/base.service';
 })
 export class DashboardComponent implements OnInit {
 
-  CardsCargando = true;
-  Cargando = true;
+  CardsCargando = false;
+  Cargando = false;
 
   Cards: DashBoardCardsModel[] = [];
 
@@ -72,69 +72,69 @@ export class DashboardComponent implements OnInit {
   constructor(public router: Router, public base: BaseService) { }
 
   ngOnInit() {
-    this.CardsCargando = true;
-    this.Cargando = true;
-    this.base.DoPost<DashBoardCardsModel>(DataApi.DashBoardCards, "FlujoDashboard", {}).subscribe(x => {
-      if (x.ok) {
-        this.Cards = x.records;
+    //this.CardsCargando = true;
+    //this.Cargando = true;
+    //this.base.DoPost<DashBoardCardsModel>(DataApi.DashBoardCards, "FlujoDashboard", {}).subscribe(x => {
+    //  if (x.ok) {
+    //    this.Cards = x.records;
 
-      }
-      this.CardsCargando = false;
-      this.Cargando = false;
+    //  }
+    //  this.CardsCargando = false;
+    //  this.Cargando = false;
 
-    });
-
-
+    //});
 
 
-    //let uno = new DashBoardCardsModel();
-    //uno.title = "Balance General";
-    //uno.iconName = "fa-wallet";
-    //uno.value = "40918";
-    //uno.titleColorClass = "text-primary"
-    //uno.iconColorClass = "text-gray-300"
-    //uno.borderColorClass = "border-left-primary";
-    //uno.tipoCard = "money";
-    //uno.valueColorClass = "text-gray-800"
 
 
-    //let dos = new DashBoardCardsModel();
-    //dos.title = "Por llevar";
-    //dos.iconName = "fa-wallet";
-    //dos.value = "0";
-    //dos.titleColorClass = "text-danger"
-    //dos.iconColorClass = "text-gray-300"
-    //dos.borderColorClass = "border-left-danger";
-    //dos.tipoCard = "money";
-    //dos.valueColorClass = "text-gray-800";
+    let uno = new DashBoardCardsModel();
+    uno.title = "Balance General";
+    uno.iconName = "fa-wallet";
+    uno.value = "40918";
+    uno.titleColorClass = "text-primary"
+    uno.iconColorClass = "text-gray-300"
+    uno.borderColorClass = "border-left-primary";
+    uno.tipoCard = "money";
+    uno.valueColorClass = "text-gray-800"
 
 
-    //let tres = new DashBoardCardsModel();
-    //tres.title = "Por recoger";
-    //tres.iconName = "fa-wallet";
-    //tres.value = "0";
-    //tres.titleColorClass = "text-info"
-    //tres.iconColorClass = "text-gray-300"
-    //tres.borderColorClass = "border-left-info";
-    //tres.tipoCard = "money";
-    //tres.valueColorClass = "text-gray-800";
+    let dos = new DashBoardCardsModel();
+    dos.title = "Por llevar";
+    dos.iconName = "fa-wallet";
+    dos.value = "0";
+    dos.titleColorClass = "text-danger"
+    dos.iconColorClass = "text-gray-300"
+    dos.borderColorClass = "border-left-danger";
+    dos.tipoCard = "money";
+    dos.valueColorClass = "text-gray-800";
 
 
-    //let cuatro = new DashBoardCardsModel();
-    //cuatro.title = "Mensajeros";
-    //cuatro.iconName = "fa-wallet";
-    //cuatro.value = "0";
-    //cuatro.titleColorClass = "text-warning"
-    //cuatro.iconColorClass = "text-gray-300"
-    //cuatro.borderColorClass = "border-left-warning";
-    //cuatro.tipoCard = "money";
-    //cuatro.valueColorClass = "text-gray-800";
-    //cuatro.subTitulo = "Balance general";
+    let tres = new DashBoardCardsModel();
+    tres.title = "Por recoger";
+    tres.iconName = "fa-wallet";
+    tres.value = "0";
+    tres.titleColorClass = "text-info"
+    tres.iconColorClass = "text-gray-300"
+    tres.borderColorClass = "border-left-info";
+    tres.tipoCard = "money";
+    tres.valueColorClass = "text-gray-800";
 
-    //this.Cards.push(uno);
-    //this.Cards.push(dos);
-    //this.Cards.push(tres);
-    //this.Cards.push(cuatro);
+
+    let cuatro = new DashBoardCardsModel();
+    cuatro.title = "Mensajeros";
+    cuatro.iconName = "fa-wallet";
+    cuatro.value = "0";
+    cuatro.titleColorClass = "text-warning"
+    cuatro.iconColorClass = "text-gray-300"
+    cuatro.borderColorClass = "border-left-warning";
+    cuatro.tipoCard = "money";
+    cuatro.valueColorClass = "text-gray-800";
+    cuatro.subTitulo = "Balance general";
+
+    this.Cards.push(uno);
+    this.Cards.push(dos);
+    this.Cards.push(tres);
+    this.Cards.push(cuatro);
 
 
   }

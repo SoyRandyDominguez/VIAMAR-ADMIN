@@ -1,18 +1,113 @@
-<!--<div class="container">-->
-<!-- Outer Row -->
-<div class="row justify-content-center">
+
+<div class="container h-100">
+
+  <div class="row h-100">
+    <div class="col-lg-10 col-md-12 login-box m-auto">
+      <div class="row ">
+
+
+        <!--parte login-->
+        <div class="col-lg-6 col-md-6 log-det contenedor">
+          <form class="user" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="small-logo">
+              <img src="https://grupoviamar.com/uploads/5610_1529193213.png" style="width:250px;" class="img-fluid" alt="Responsive image">
+            </div>
+            <br>
+            <div class="text-box-cont">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" placeholder="usuario" aria-label="Username" formControlName="Username"
+                       [ngClass]="{ 'is-invalid': submitted && f.Username.errors }"  [readonly]="sucursales"/>
+
+                <div *ngIf="submitted && f.Username.errors" class="invalid-feedback">
+                  <div *ngIf="f.Username.errors.required">El Usuario es requerido</div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                </div>
+                <input type="password" class="form-control" placeholder="contraseña" aria-label="password"
+                       formControlName="Clave"
+                       [ngClass]="{ 'is-invalid': submitted && f.Clave.errors }" [readonly]="sucursales" />
+                <div *ngIf="submitted && f.Clave.errors" class="invalid-feedback">
+                  <div *ngIf="f.Clave.errors.required">La contraseña es requerida</div>
+                </div>
+              </div>
+
+
+              <div class="input-group center">
+                <button type="submit"  class="btn btn-primary btn-round" [disabled]="loading">
+                  Entrar
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="row">
+                <p class="forget-p">No tienes una cuenta? <span class="text-primary">Contáctanos</span></p>
+              </div>
+              <div class="row">
+                <p class="small-info">Grupo Viamar</p>
+              </div>
+            </div>
+
+
+            </form>
+</div>
+
+
+        <!--parte azul-->
+        <div class="col-lg-6 col-md-6 box-de">
+          <div class="inn-cover">
+            <div class="ditk-inf w-100">
+              <div class="text-box-cont" *ngIf="sucursales">
+                <div class=" m-auto font-weight-bold" style="font-size:1.5em;">
+                  <i class="fab fa-asymmetrik"></i> Grupo Viamar
+                </div>
+                <ng-select class="w-100 m-0 p-0" [items]="sucursales"
+                           bindLabel="nombre"
+                           bindValue="codigo"
+                           groupBy="grupo"
+                           [(ngModel)]="selectedSucursal">
+                  <ng-template ng-optgroup-tmp let-item="item">
+                    {{item.grupo || 'Unnamed group'}}
+                  </ng-template>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--parte azul-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="row justify-content-center">
 
   <div class="col-lg-6 col-md-8 col-sm-12">
 
     <div class="card o-hidden border-0 shadow-sm my-5">
       <div class="card-body p-0">
-        <!-- Nested Row within Card Body -->
         <div class="row pt-5">
-          <!--<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>-->
           <div class="col-lg-8 offset-lg-2 col-md-12">
             <div class="p-5">
               <div class="text-center p-5">
-                <img src="../../../assets/img/LogoMAR.png" style="width:350px;" alt="" />
               </div>
               <form class="user" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
@@ -39,23 +134,12 @@
                   </div>
 
                 </div>
-                <!--<div class="form-group">
-                  <div class="custom-control custom-checkbox small">
-                    <input type="checkbox" class="custom-control-input" id="customCheck">
-                    <label class="custom-control-label" for="customCheck">Remember Me</label>
-                  </div>
-                </div>-->
+
                 <button type="submit" class="btn btn-primary-light btn-user btn-block" [disabled]="loading">
                   Login
                   <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 </button>
-                <!--<hr>-->
-                <!--<a href="index.html" class="btn btn-google btn-user btn-block">
-                  <i class="fab fa-google fa-fw"></i> Login with Google
-                </a>
-                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                  <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                </a>-->
+
               </form>
               <hr>
               <div class="text-center">
@@ -73,32 +157,4 @@
 
   </div>
 
-</div>
-
-<!--</div>-->
-<!--<div class="alert alert-info col">
-  <strong>Normal User</strong> - U: user P: user<br />
-  <strong>Administrator</strong> - U: admin P: admin
-</div>
-<h2>Login</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-      <div *ngIf="f.username.errors.required">Username is required</div>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-      <div *ngIf="f.password.errors.required">Password is required</div>
-    </div>
-  </div>
-  <div class="form-group">
-    <button [disabled]="loading" class="btn btn-primary">Login</button>
-    <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-  </div>
-  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-</form>-->
+</div>-->

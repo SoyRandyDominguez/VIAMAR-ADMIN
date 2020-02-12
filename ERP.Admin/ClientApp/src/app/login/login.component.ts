@@ -3,15 +3,27 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { UserAuthModel } from '../Models/Auth/user-auth-model';
-import { AuthenticationService } from '../Services/Authentication/autenticacion.service';
+import { AuthenticationService,  } from '../Services/Authentication/autenticacion.service';
 import { BaseService } from '../Services/HTTPClient/base.service';
 import { LibrariesService } from '../Services/Common/libraries-service.service';
 import { first } from 'rxjs/operators';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  animations: [
+    // animation triggers go here
+  ]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -19,6 +31,36 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  selectedSucursal: ComboBox = null;
+
+  sucursales: ComboBox[] = null
+
+  //sucursales: ComboBox[] = [
+  //  { codigo: 1, nombre: 'SERVICIOS MOVIL NO. 1', grupo: 'VIAMAR, S.A.', grupoID: '1' },
+  //  { codigo: 2, nombre: 'JAGUAR DOMINICANA', grupo: 'VIAMAR, S.A.', grupoID: '1' },
+  //  { codigo: 3, nombre: 'QUICK LANE HIGUEY', grupo: 'VIAMAR, S.A.', grupoID: '1' },
+  //  { codigo: 4, nombre: 'QUICK PARTS/MARMOLERA', grupo: 'VIAMAR, S.A.', grupoID: '1' },
+  //  { codigo: 5, nombre: 'OPORTUNITY CARS', grupo: 'VIAMAR, S.A.', grupoID: '1' },
+  //  { codigo: 6, nombre: 'NEGOCIOS DIVERSOS (PRINCIPAL)', grupo: 'VIAMAR, S.A.', grupoID: '1' },
+
+
+  //  { codigo: 37, nombre: 'ECO MOTORS (PRINCIPAL)', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
+  //  { codigo: 38, nombre: 'ECOMOTORS  (HIGUEY)', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
+  //  { codigo: 39, nombre: 'NEGOCIOS DIVERSOS 27 FEB.', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
+  //  { codigo: 40, nombre: 'ECOMOTORS  (SANTIAGO EST.)', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
+  //  { codigo: 41, nombre: 'ECOMOTORS  (SANTIAGO DUARTE)', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
+
+
+
+  //  { codigo: 26, nombre: 'QUIEREME COMO SOY', grupo: 'QUIEREME COMO SOY', grupoID: '5' },
+
+  //  { codigo: 27, nombre: 'FERALCO (MAXIMO GOMEZ)', grupo: 'FERALCO', grupoID: '6' },
+
+  //  { codigo: 29, nombre: 'QUICK LANE/QUICK PARTS SAN FCO', grupo: 'AUTOMARE', grupoID: '8' },
+  //]
+
+
+
   constructor(
     public formBuilder: FormBuilder,
     public route: ActivatedRoute,
@@ -66,13 +108,18 @@ export class LoginComponent implements OnInit {
         data => {
           if (data.ok && data.records[0].token) {
             this.loading = false;
-            this.router.navigateByUrl("/home");
+
+
+
+            console.log(data.valores[0]);
+
+            //this.router.navigateByUrl("/home");
           } else {
 
             this.loading = false;
             this.loginForm.reset();
             this.library.showToast(data.errores[0].toString(), { classname: 'bg-danger text-light', icon: "fas fa-exclamation-triangle" });
-            this.router.navigateByUrl("/login");
+            //this.router.navigateByUrl("/login");
           }
         },
         error => {
@@ -83,5 +130,16 @@ export class LoginComponent implements OnInit {
   }
 
  
+
+}
+
+
+export class ComboBox {
+
+  codigo: number;
+  nombre: string;
+  grupo: string
+  grupoID: string;
+
 
 }

@@ -31,7 +31,6 @@ export class NavBarComponent implements OnInit {
 
 
     ngOnInit() {
-        this.getBalanceUsuario();
   }
 
 
@@ -40,26 +39,7 @@ export class NavBarComponent implements OnInit {
     }
 
 
-    getBalanceUsuario() {
- 
 
-        this.base.DoPost<Usuarios>(DataApi.MUsuario, "GetBalanceUsuarios", { "@UsuarioID": this.currentUser.id }).subscribe(x => {
-            //console.log(x.valores);
-            let Balance = x.valores[0];
-            if (x.ok && x.valores.length > 0) {
-                this.BalanceUsuario = Balance.BalanceActual;
-                this.MostrarBalance = true;
-                //console.log(Balance.BalanceActual);
-
-            } else {
-                this.BalanceUsuario = 0;
-                this.MostrarBalance = false;
-            }
-
-        }, error => {
-
-        });
-    }
 
   logout() {
 

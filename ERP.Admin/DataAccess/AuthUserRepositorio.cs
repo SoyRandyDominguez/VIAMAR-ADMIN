@@ -28,9 +28,11 @@ namespace ERP.DataAccess
                 string Clave = CommonHelpers.GetDictionaryValue<string>(request.Parametros, "Clave").Value;
 
 
-                AuthUserRecord user = Query<AuthUserRecord>(@"select top 1  UsuarioID id, UsuNombre FirstName, UsuApellido 
-                                                    LastName,email, UsuUserName Username, UsuClave Password from MUsuarios where UsuUserName = @Username and UsuClave = @Clave ",
-                                                    new { Username= Username, Clave= Encryptor.EncryptPassword(Clave)}).FirstOrDefault();
+                AuthUserRecord user = Query<AuthUserRecord>(@"  select top 1  ID id, Nombres FirstName, Apellidos LastName,email, Username Username, 
+													password Password from [dbo].[Usuario]
+													where Username = @Username and password = @Clave ",
+                                                    //new { Username= Username, Clave= Encryptor.EncryptPassword(Clave)}).FirstOrDefault();
+                                                    new { Username= Username, Clave= Clave}).FirstOrDefault();
 
                 if (user == null)
                 {
@@ -38,11 +40,43 @@ namespace ERP.DataAccess
                     response.Errores.Add("No pudimos completar la autorizacion, por favor intente de nuevo.");
                     return response;
                 }
+
+
+                var sucursales = Query<ComboBoxRecord>(@"  select s.ID Codigo,s.Nombre, c.Nombre Grupo, c.ID GrupoID from Sucursal s 
+                                                    join UsuarioSucursalEnrroll usr on usr.SucursalID = s.ID
+                                                    join Compania c on c.ID = s.CompaniaID
+                                                    where usr.UsuarioID =  @ID", new { ID = user.Id });
+
+
+
+
+
+                if (sucursales == null)
+                {
+                    response.OK = false;
+                    response.Errores.Add("No pudimos completar la autorizacion, Este usuario no pertenece a ninguna sucursal.");
+                    return response;
+                }
+
+
+                response.Valores.Add(sucursales);
+
+
                 user.Permisos = new List<FuncionAdmin>();
-                user.Permisos = Query<FuncionAdmin>(@"select mu.UsuarioID , fa.Id FuncionId ,fa.MenuCorto PermisoNombre , fa.FuncionPadreId from RFuncionAdminUsuario fau
-                                                        join MUsuarios mu on mu.UsuarioID = fau.UsuarioID
-                                                        join FuncionAdmin fa on fa.Id = fau.FuncionAdminID 
-                                                        where mu.UsuarioID = @ID", new { ID = user.Id });
+                user.Permisos = Query<FuncionAdmin>(@"													 
+	            select u.ID UsuarioID , p.PermisoID FuncionId , p.Nombre PermisoNombre, p.PermisoPadreID FuncionPadreId from Permiso p
+	            join RolPermisoEnrroll rp on rp.PermisoID = p.PermisoID
+	            join Rol r on r.RolID = rp.RolID
+	            join Usuario u on u.RolID = r.RolID
+	            where u.ID = @ID", new { ID = user.Id });
+
+                if (user.Permisos == null)
+                {
+                    response.OK = false;
+                    response.Errores.Add("No pudimos completar la autorizacion, Este usuario no posee permisos.");
+                    return response;
+                }
+
 
                 user.Role = "Usuario";
                 // authentication successful so generate jwt token

@@ -6,51 +6,9 @@ import { AuthGuard } from './Services/Authentication/auth-guard.guard';
 const AllPermissions =
   [
     'Admin',
-    'Punto de venta',
-    'Numeros',
-    'Recargas',
-    'Central',
-    'Banca',
-    'EditarBancas',
-    'MensajeGeneral',
-    'MensajeDirecto',
-    'Esquemas',
-    'EditarConfiguraciones',
-    'CrearLLave',
-    'Riferos',
-    'CrearRiferos',
-    'EliminarRiferos',
-    'EditarRiferos',
-    'BalanceRiferos',
-    'Zonas',
-    'CrearZonas',
-    'EditarZonas',
-    'EliminarZonas',
-    'Sorteos',
-    'CerrarVentas',
-    'GuardarPremios',
-    'CorregirPremios',
-    'ReiniciarVentas',
-    'NoLaborable',
-    'Limites',
-    'Controles',
-    'Usuarios',
-    'CrearUsuarios',
-    'EditarUsuarios',
-    'EliminarUsuarios',
-    'Cuentas',
-    'Grupos',
-    'Configuraciones',
-    'ConfiguracionesGenerales',
-    'EsquemasPrecios',
-    'Alertas',
-    'Reportes',
-    'ReporteVenta',
-    'ReporteTransacciones',
-    'ReporteRecargas',
-    'Flujo',
-    'Movimientos',
-    'IngresosGastos'
+    'Receptor',
+    'Citas',
+    'RegistrarCita'
   ]
 
 
@@ -60,7 +18,7 @@ const routes: Routes = [
 
   {
     path: '', loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule),
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule),

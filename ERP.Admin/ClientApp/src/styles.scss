@@ -8,6 +8,19 @@
 @import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
 
 
+ng-select.custom > div {
+  border: 0 !important;
+  outline: none;
+}
+
+ng-select.custom > div > div.single > div.toggle {
+  color: #2ebaee !important;
+}
+
+ng-select.custom > div > div.single > div.placeholder {
+  text-align: center;
+}
+
 
 .custom-day {
   text-align: center;

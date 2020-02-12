@@ -8,12 +8,11 @@ import { ToastComponent } from './Components/toast/toast.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
 @NgModule({
 
   declarations: [
     AppComponent,  
-    ToastComponent,
+    ToastComponent, 
   ],
   imports: [ 
     BrowserModule,
