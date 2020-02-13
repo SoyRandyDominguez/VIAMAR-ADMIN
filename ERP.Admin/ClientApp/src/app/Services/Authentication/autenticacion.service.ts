@@ -33,6 +33,7 @@ export class AuthenticationService {
           let Perms = [];
           res.records[0].permisos.forEach(x => { Perms.push(x.permisoNombre); });
           this.permissionsService.loadPermissions(Perms);
+
           res.records[0].permisos = [];
           localStorage.setItem('currentUser', JSON.stringify(res.records[0]));
           this.currentUserSubject.next(res.records[0]);

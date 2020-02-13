@@ -7,6 +7,8 @@ export class UserAuthModel {
   lastName: string;
   role: string;
   token?: string;
+  companiaID: number;
+  sucursalID: number;
   permisos?: Permisos[];
 }
 export class Permisos {

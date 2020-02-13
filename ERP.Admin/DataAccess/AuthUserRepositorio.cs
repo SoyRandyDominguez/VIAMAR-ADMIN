@@ -28,8 +28,9 @@ namespace ERP.DataAccess
                 string Clave = CommonHelpers.GetDictionaryValue<string>(request.Parametros, "Clave").Value;
 
 
-                AuthUserRecord user = Query<AuthUserRecord>(@"  select top 1  ID id, Nombres FirstName, Apellidos LastName,email, Username Username, 
-													password Password from [dbo].[Usuario]
+                AuthUserRecord user = Query<AuthUserRecord>(@"  select top 1  ID id, Nombres FirstName, Apellidos LastName,email, Username Username, r.Nombre Role,
+													password Password from [dbo].[Usuario] u
+                                                    join Rol r on r.RolID = u.RolID
 													where Username = @Username and password = @Clave ",
                                                     //new { Username= Username, Clave= Encryptor.EncryptPassword(Clave)}).FirstOrDefault();
                                                     new { Username= Username, Clave= Clave}).FirstOrDefault();
@@ -58,9 +59,7 @@ namespace ERP.DataAccess
                     return response;
                 }
 
-
                 response.Valores.Add(sucursales);
-
 
                 user.Permisos = new List<FuncionAdmin>();
                 user.Permisos = Query<FuncionAdmin>(@"													 
@@ -78,7 +77,6 @@ namespace ERP.DataAccess
                 }
 
 
-                user.Role = "Usuario";
                 // authentication successful so generate jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes("REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING");

@@ -7,6 +7,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ToastComponent } from './Components/toast/toast.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
 
@@ -15,7 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ToastComponent, 
   ],
   imports: [ 
-    BrowserModule,
+    BrowserModule, BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     NgxPermissionsModule.forRoot(),

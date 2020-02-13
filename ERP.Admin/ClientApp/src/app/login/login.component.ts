@@ -60,7 +60,8 @@ export class LoginComponent implements OnInit {
   //]
 
 
-
+  estilo1 = null;
+  estilo2 = null;
   constructor(
     public formBuilder: FormBuilder,
     public route: ActivatedRoute,
@@ -78,6 +79,15 @@ export class LoginComponent implements OnInit {
 
   }
 
+  cancelar() {
+    this.estilo1 = null;
+    this.estilo2 = null;
+    this.loginForm.reset();
+    this.submitted = false;
+  }
+
+   
+
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       Username: ['', Validators.required],
@@ -85,7 +95,7 @@ export class LoginComponent implements OnInit {
     });
 
 
-    this.loginForm.valueChanges.subscribe(x => { this.error = ""; });
+    this.loginForm.valueChanges.subscribe(x => { this.error = x; });
     // get return url from route parameters or default to '/'
     //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -94,14 +104,15 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
+
+
     this.submitted = true;
-    // stop here if form is invalid
+     //stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
 
     this.loading = true;
-    //let res = this.authenticationService.login(this.f.username.value, this.f.password.value)
     this.authenticationService.login(this.f.Username.value, this.f.Clave.value)
       .pipe(first())
       .subscribe(
@@ -109,15 +120,19 @@ export class LoginComponent implements OnInit {
           if (data.ok && data.records[0].token) {
             this.loading = false;
 
+            this.sucursales = data.valores[0];
 
+            if (this.sucursales.length > 0) {
+              this.estilo1 = { 'transform': 'rotateY(-180deg)' };
+              this.estilo2 = { 'transform': 'rotateY(0deg)' };
+            }
 
-            console.log(data.valores[0]);
-
-            //this.router.navigateByUrl("/home");
           } else {
 
             this.loading = false;
             this.loginForm.reset();
+            this.submitted = false;
+
             this.library.showToast(data.errores[0].toString(), { classname: 'bg-danger text-light', icon: "fas fa-exclamation-triangle" });
             //this.router.navigateByUrl("/login");
           }
@@ -127,6 +142,39 @@ export class LoginComponent implements OnInit {
           this.error = error;
           this.loading = false;
         });
+  }
+
+
+
+  Entrar() {
+    this.loading = true;
+    if (this.selectedSucursal != null) {
+
+
+      let currentUser: UserAuthModel = JSON.parse(localStorage.getItem('currentUser'));
+      console.log(currentUser);
+      console.log(this.selectedSucursal);
+      currentUser.sucursalID = this.selectedSucursal.codigo;
+      currentUser.companiaID = Number(this.selectedSucursal.grupoID);
+      console.log(currentUser);
+
+      localStorage.removeItem('currentUser');
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+      this.router.navigateByUrl("/home");
+
+    }
+
+
+
+    this.loading = false;
+
+
+
+
+
+      
+
   }
 
  
