@@ -1,0 +1,111 @@
+<div class="animated yt-loader" *ngIf="Cargando"></div>
+
+
+
+
+
+<div class="card  mb-4 shadow-sm ">
+  <div class="animated yt-loader-edit" *ngIf="Cargando"></div>
+  <div class="card-header bg-white py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-info">Listado de Usuarios</h6>
+  </div>
+
+  <div class="card-body">
+
+  <div class="row">
+    <div class="col-md-10 ">
+      <input [(ngModel)]="Search" #ctrl="ngModel" (keyup)="getUsuarios()" type="text" class="form-control"
+             placeholder="Buscar por ID | Usuario | Nombre | Apellido">
+    </div>
+    <div class="col  text-right">
+      <button type="button" class="btn btn-primary-light" routerLink="usuario/0"><i class="fas fa-plus"></i> Agregar nuevo Usuario</button>
+    </div>
+  </div>
+
+  <div class="row pt-3">
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Usuario</th>
+          <th scope="col">Tipo Usuario</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let usuario of usuarios">
+
+        <tr>
+          <th>{{usuario.usuarioID}}</th>
+          <td>{{usuario.usuUserName}}</td>
+          <td>{{usuario.tipo}}</td>
+          <td>{{usuario.usuNombre}}</td>
+          <td>{{usuario.usuApellido}}</td>
+          <td>
+            <button type="button" class="btn text-white btn-primary-light btn-sm m-1" routerLink="usuario/{{usuario.usuarioID}}"><i class="fas fa-pencil-alt"></i> </button>
+            <button type="button" class="btn btn-sm m-1"
+                    [ngClass]="{'btn-danger':usuario.usuActivo == 1,'btn-success pr-4':usuario.usuActivo == 0}"
+                    (click)="deleteUsuario(usuario.usuarioID, usuario.usuActivo) ">
+              <i class="fas text-white " [ngClass]="{'fa-user-alt-slash':usuario.usuActivo == 1,'fa-user-alt pr-2':usuario.usuActivo == 0}"></i>
+              {{usuario.usuActivo == 1 ? 'Desactivar' : 'Activar'}}
+            </button>
+            <!--<button type="button" class="btn btn-warning btn-sm m-1" (click)="openConfirmacion(DeleteConfirmationModal,usuario.usuarioID) "><i class="fas fa-user-alt-slash text-white "></i> </button>-->
+          </td>
+        </tr>
+
+      </tbody>
+
+      <tbody *ngFor="let loading of arrayLoading">
+        <tr>
+          <td class="td-3"><span></span></td>
+          <td class="td-3"><span></span></td>
+          <td class="td-3"><span></span></td>
+          <td class="td-3"><span></span></td>
+          <td class="td-3"><span></span></td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <div class="row pt">
+    <div class="col-md-8 col-xs-12 ">
+      <ngb-pagination [collectionSize]="paginaTotalRecords" [(page)]="paginaNumeroActual" [pageSize]="paginaSize" [maxSize]="5" [boundaryLinks]="true" (pageChange)="getUsuarios()">
+      </ngb-pagination>
+    </div>
+
+    <div class="col-md-4 text-right d-none d-md-block  ">
+      <select class="form-control d-block" name="paginaSize" [(ngModel)]="paginaSize" (change)="getUsuarios()">
+        <option [ngValue]="5">5 registro por pagina</option>
+        <option [ngValue]="10">10 registro por pagina</option>
+        <option [ngValue]="15">15 registro por pagina</option>
+      </select>
+    </div>
+  </div>
+
+
+</div>
+</div>
+
+
+<!--<ng-template #DeleteConfirmationModal let-modal>
+  <div class="animated yt-loader-edit" *ngIf="CargandoDelete"></div>
+
+  <div class="modal-body text-center ">
+    <p class="text-center mt-5"> <i class="fas fa-3x fa-exclamation-triangle text-warning font-weight-bold"></i> </p>
+    <p>
+      <strong style="color:black;">
+        ¿Estás seguro que quieres completar esta operación?
+      </strong> <br />
+                <span class=" text-sm-center">Esta operación va a desactivar el usuario y la caja. </span>
+    </p>
+  </div>
+
+  <div class="modal-footer border-0">
+    <button type="button" class="btn btn-light" (click)="CloseConfirmacionModal()">Cancelar</button>
+    <button type="button" class="btn btn-warning " ngbAutofocus (click)="deleteUsuario() ">Confirmar</button>
+  </div>
+</ng-template>-->
+
