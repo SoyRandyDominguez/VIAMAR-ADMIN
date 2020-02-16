@@ -1,0 +1,133 @@
+<div class="animated yt-loader-edit" *ngIf="Cargando"></div>
+
+<form [formGroup]="Formulario" (ngSubmit)="onSubmit()" class="pt-2">
+  <div class="form-row">
+
+    <div class="form-group col-md-6 col-sm-12">
+      <label>Nombre <span class=" text-danger">*</span> </label>
+      <input type="text" formControlName="usuNombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuNombre.errors }">
+      <div *ngIf="submitted && f.usuNombre.errors" class="invalid-feedback animated animated--fade-in">
+        <div *ngIf="f.usuNombre.errors.required  ">El nombre es obligatorio</div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6 col-sm-12">
+      <label>Apellido <span class=" text-danger">*</span> </label>
+      <input type="text" formControlName="usuApellido" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuApellido.errors }">
+      <div *ngIf="submitted && f.usuApellido.errors" class="invalid-feedback animated animated--fade-in">
+        <div *ngIf="f.usuApellido.errors.required  ">El apellido es obligatorio</div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6 col-sm-12">
+      <label>Cédula <span class=" text-danger">*</span> </label>
+      <input type="text" formControlName="usuCedula" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuCedula.errors }">
+      <div *ngIf="submitted && f.usuCedula.errors" class="invalid-feedback animated animated--fade-in">
+        <div *ngIf="f.usuCedula.errors.required  ">El cedula es obligatoria</div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6 col-sm-12">
+      <label>Fecha de Nacimiento  </label>
+      <input type="date" formControlName="usuFechaNac" class="form-control" />
+    </div>
+
+    <div class="form-group col-md-6 col-sm-12">
+      <label>Usuario <span class=" text-danger">*</span> </label>
+      <input type="text" formControlName="usuUserName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuUserName.errors }">
+      <div *ngIf="submitted && f.usuUserName.errors" class="invalid-feedback animated animated--fade-in">
+        <div *ngIf="f.usuUserName.errors.required  ">El usuario es obligatorio</div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6  ">
+      <label for=" ">Tipo de usuario <span class=" text-danger">*</span></label>
+      <ng-select [items]="tiposUsuarios"
+                 bindLabel="nombre"
+                 bindValue="codigo"
+                 [ngClass]="{'form-control border-danger p-0' : submitted && f.tipoUsuarioID.errors }"
+                 placeholder="Selecciona"
+                 notFoundText="Tipo de usuario no encontrado"
+                 [(ngModel)]="RiferoSelected"
+                 formControlName="tipoUsuarioID">
+      </ng-select>
+      <div *ngIf="submitted && f.tipoUsuarioID.errors" class="text-danger pt-1 animated animated--fade-in" style="font-size:13px">
+        <div *ngIf="f.tipoUsuarioID.errors.required">El tipo de usuario es obligatorio</div>
+      </div>
+    </div>
+
+
+    <div *ngIf="RiferoSelected == 4" class="form-group col-md-6">
+      <label for=" ">Riferos <span class=" text-danger">*</span></label>
+      <ng-select [items]="Riferos"
+                 bindLabel="nombre"
+                 bindValue="codigo"
+                 [ngClass]="{'form-control border-danger p-0' : submitted && f.RiferoID.errors }"
+                 placeholder="Selecciona"
+                 notFoundText="Rifero no encontrado"
+                 formControlName="RiferoID">
+      </ng-select>
+      <div *ngIf="submitted && f.RiferoID.errors" class="text-danger pt-1 animated animated--fade-in" style="font-size:13px">
+        <div *ngIf="f.RiferoID.errors.required">El Rifero es obligatorio</div>
+      </div>
+    </div>
+
+
+    <div class="form-group col-md-6 col-sm-12">
+      <label>Email   </label>
+      <input type="email" formControlName="email" class="form-control">
+    </div>
+
+    <div class="form-group col-md-6 col-sm-12">
+      <label>Clave <span class=" text-danger">*</span> </label>
+      <input type="password" formControlName="usuClave" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuClave.errors }">
+      <div *ngIf="submitted && f.usuClave.errors" class="text-danger animated animated--fade-in pt-1" style="font-size:13px">
+        <div *ngIf="f.usuClave.errors.required  ">La clave es obligatorio</div>
+        <div *ngIf="f.usuClave.errors.minlength  ">2 dígitos como mínimo</div>
+        <div *ngIf="f.usuClave.errors.maxlength  ">15 dígitos como máximo</div>
+      </div>
+    </div>
+
+
+
+    <!--<div class="form-group  col-md-6 col-sm-12">
+    <label for=" ">Estado del usuario</label>
+    <div class="custom-control custom-checkbox  ">
+      <input type="checkbox" class="custom-control-input" id="activa" name="activa" formControlName="usuActivo">
+      <label class="custom-control-label" for="activa" *ngIf="f.usuActivo.value; else DesactivadoLabel">Activado</label>
+      <ng-template #DesactivadoLabel>
+        <label class="custom-control-label" for="activa">Desactivado</label>
+      </ng-template>
+    </div>
+  </div>-->
+
+    <div class="form-group col-md-6 col-sm-12" *ngIf="claveAnterior != f.usuClave.value">
+      <label>Confirma tu clave <span class=" text-danger">*</span> </label>
+      <input type="password" formControlName="usuClaveConfirm" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuClaveConfirm.errors }">
+      <div *ngIf="submitted && f.usuClaveConfirm.errors" class="text-danger animated animated--fade-in pt-1" style="font-size:13px">
+        <div *ngIf="f.usuClaveConfirm.errors.required  ">Confirma tu clave</div>
+        <div *ngIf="f.usuClaveConfirm.errors.mustMatch  ">Las claves deben ser iguales</div>
+        <div *ngIf="f.usuClaveConfirm.errors.minlength  ">2 dígitos como mínimo</div>
+        <div *ngIf="f.usuClaveConfirm.errors.maxlength  ">15 dígitos como máximo</div>
+      </div>
+    </div>
+    <div class="form-group col-md-12">
+      <label>Comentario  </label>
+      <textarea type="text" formControlName="usuComentario" class="form-control" rows="3" maxlength="200"></textarea>
+    </div>
+
+
+
+    <div class="form-group col-md-6 animated animated--grow-in" *ngIf="mostrarBalanceMinimoCaja">
+      <label>Balance mínimo para su caja virtual </label>
+      <input type="number" formControlName="balanceMinimoCaja" class="form-control">
+    </div>
+
+  </div>
+  <div class="form-group text-right">
+    <button type="button" class="btn btn-light m-1" routerLink="/usuarios"><i class="fas fa-times"></i> Cancelar</button>
+    <button type="button" *ngIf="btnGuardarCargando" class="btn btn-primary m-1 disabled" style="cursor:not-allowed !important"><i class="fas fa-spin fa-spinner"></i> Guardando </button>
+    <button type="submit" *ngIf="!btnGuardarCargando" class="btn btn-primary-light m-1"><i class="fas fa-check"></i> Guardar</button>
+  </div>
+
+</form>

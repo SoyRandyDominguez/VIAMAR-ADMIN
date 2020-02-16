@@ -1,0 +1,8 @@
+<div id='treeparent '>
+  <div class="animated yt-loader-edit" *ngIf="Cargando"></div>
+
+  <ejs-treeview #treeview id='treeelement' [fields]='field'
+                [showCheckBox]='showCheckBox'
+                (nodeChecked)='nodeChecked($event)'>
+  </ejs-treeview>
+</div>

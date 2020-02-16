@@ -1,0 +1,124 @@
+<ul class="navbar-nav sidebar bg-white sidebar-light accordion shadow-sm   .animated--fade-in " [ngClass]="{'toggled': MenuClose}" id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]='["/home"]'>
+    <!--<div class="sidebar-brand-icon rotate-n-15">-->
+    <div class="sidebar-brand-icon">
+      <!--<img src=".././../../assets/img/LogoMAR.png" style="width:100px;" alt="" />-->
+      <img src="https://grupoviamar.com/uploads/5610_1529193213.png" style="width:100px;" class="img-fluid" alt="Responsive image">
+    </div>
+
+    <!--<div class="sidebar-brand-text mx-3">MARADMIN <sup>v2</sup></div>-->
+    <div class="sidebar-brand-text mx-3" style="font-size:10px!important;">
+    </div>
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0">
+
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item  " [routerLinkActive]='["active"]'>
+    <a class="nav-link" [routerLink]='["/dashboard"]' style="color:black!important;">
+      <!--<i class="fas fa-fw fa-tachometer-alt"></i>-->
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#2196f3 !important">home</i>
+      <span>
+        Dashboard
+      </span>
+    </a>
+  </li>
+
+
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'Controles']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]' >
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLimites" aria-expanded="true" aria-controls="collapseLimites">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#e91e63  !important;">people</i>
+      <span>Test Drive</span>
+    </a>
+    <div id="collapseLimites" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <!--<h6 class="collapse-header">Login Screens:</h6>-->
+        <!--<a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/controles"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'Controles']">-->
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/limites/numeros"]' style="color:black!important;" >
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#0f9aee !important;">stop_screen_share</i>
+          <span>
+            Menu Nuevo
+          </span>
+        </a>
+
+
+      </div>
+    </div>
+  </li>
+
+
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'CrearUsuarios','EditarUsuarios','EliminarUsuarios']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]'>
+    <a class="nav-link" [routerLink]='["/usuarios"]' style="color:black!important;" >
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#4e73df  !important;">emoji_people</i>
+      <span>
+        Usuarios
+      </span>
+    </a>
+  </li>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Nav Item - Charts -->
+  <!--<li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="['Admin', 'ConfiguracionesGenerales','EsquemasPrecios']">-->
+  <li class="nav-item" [routerLinkActive]='["active"]' >
+    <a class="nav-link" [routerLink]='["/configuraciones/generales"]' style="color:black!important;">
+      <i class="fas fa-fw fa-cog" style="color:black  !important;"></i>
+      <span>Configuraciones</span>
+    </a>
+  </li>
+
+
+
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item" [routerLinkActive]='["active"]' *ngxPermissionsOnly="[]">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes" aria-expanded="true" aria-controls="collapseReportes">
+      <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#4e73df  !important;">insert_drive_file</i>
+      <span>Reportes</span>
+    </a>
+    <div id="collapseReportes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+
+        <a class="collapse-item" [routerLinkActive]='["active"]' [routerLink]='["/ventas"]' style="color:black!important;" *ngxPermissionsOnly="['Admin', 'ReporteVenta']">
+          <i class="material-icons-outlined mr-1" style="vertical-align: -5px; font-size:20px; color:#673ab7 !important;">insert_drive_file</i>
+          <span>
+            Ejemplo
+          </span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+
+
+
+
+  <hr class="sidebar-divider">
+
+  <!--<div class="sidebar-heading">
+    Flujo Efectivo
+  </div>-->
+
+  <!-- Divider -->
+  <hr class="sidebar-divider d-none d-md-block">
+
+  <!-- Sidebar Toggler (Sidebar) -->
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle" (click)="toogleMenu()"></button>
+  </div>
+
+</ul>
+<!-- End of Sidebar -->

@@ -1,0 +1,17 @@
+<ngb-toast *ngFor="let toast of toastService.toasts" [class]="toast.classname || bg-success" [autohide]="true" [delay]="toast.delay || 5000"
+           (hide)="toastService.removeToast(toast)"
+           (click)="toastService.removeToast(toast)"
+           class="text-justify shadow rounded">
+  <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
+    <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+  </ng-template>
+
+  <ng-template #text>
+    <div class="d-flex flex-row bd-highlight">
+      <div class="bd-highlight">
+        <i *ngIf="HasIcon(toast)" style="font-size:3em; padding-right:10px; font-weight:800;" [class]="toast.icon"></i> 
+      </div>
+      <div class="text-center bd-highlight"><span style="font-size:1.0em; font-weight:800;">{{ toast.textOrTpl }} </span></div>
+    </div>
+  </ng-template>
+</ngb-toast>
