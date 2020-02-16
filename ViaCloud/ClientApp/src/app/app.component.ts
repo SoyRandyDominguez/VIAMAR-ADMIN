@@ -21,17 +21,13 @@ export class AppComponent implements OnInit{
   ) {
 
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-
-    //if (this.currentUser) {
-    //  this.authenticationService.logout();
-    //}
-
   }
 
-
+      
   ngOnInit() {
 
-
+      this.authenticationService.setDecodeToken();
+        
   }
 
 

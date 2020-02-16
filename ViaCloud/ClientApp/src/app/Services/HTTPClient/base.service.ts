@@ -1,7 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { DashBoardCardsModel } from '../../Models/SharedComponentsModels/DashBoardCardsModel';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { JwtHelperService } from "@auth0/angular-jwt";
+
+const helper = new JwtHelperService();
 
 
 export enum DataApi {
@@ -51,6 +54,13 @@ export enum DataApi {
     Authentication = 44,
     Values = 45
 }
+
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+    })
+}
+
 
 @Injectable({
     providedIn: 'root'
@@ -184,7 +194,7 @@ export class BaseService {
     }
 
     public DoPostAny<T>(api: DataApi, Method: string, request: any): Observable<RespuestaContenido<T>> {
-        return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
+        return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request, httpOptions);
     }
 
     public GetComboBox<T>(Method: string): Observable<RespuestaContenido<T>> {

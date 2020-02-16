@@ -74,9 +74,7 @@ export class LoginComponent implements OnInit {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/']);
-        }
-
-
+        } 
     }
 
     cancelar() {
@@ -94,17 +92,11 @@ export class LoginComponent implements OnInit {
             Clave: ['', Validators.required]
         });
 
-        this.service.DoPostAny(DataApi.Authentication, "Login", {"Usuario":"RDominguez", "Password":"lapizconciente"}).subscribe(response => {
+        this.service.DoPostAny(DataApi.Usuario, "Registrar", { "UserName": "RDominguez", "Password": "lapizconciente" }).subscribe(response => {
             console.log(response);
         }, error => {
             console.log(error);
         });
-
-
-
-
-
-
 
 
         this.loginForm.valueChanges.subscribe(x => { this.error = x; });
