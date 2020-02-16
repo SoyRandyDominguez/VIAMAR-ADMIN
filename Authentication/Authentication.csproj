@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Public\Public.csproj" />
     <ProjectReference Include="..\Usuario\Usuarios.csproj" />
   </ItemGroup>

@@ -14,6 +14,7 @@ namespace Public.DataAccess.Models
             Records = new List<T>();
             Mensajes = new List<string>();
             Pagina = new Paginacion();
+            OK = true;
         }
         public bool OK { get; set; }
         public List<string> Errores { get; set; }

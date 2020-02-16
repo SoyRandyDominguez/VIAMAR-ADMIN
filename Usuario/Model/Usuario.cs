@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Usuarios.Model
@@ -7,11 +8,11 @@ namespace Usuarios.Model
     public class Usuario
     {
         public int Id { get; set; }
+
         public string UserName { get; set; }
         public string Password { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-
 
 
         public string Documento { get; set; }

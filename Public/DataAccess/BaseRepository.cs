@@ -13,11 +13,12 @@ using Public.DataAccess.Models;
 
 namespace Public.DataAccess
 {
-    public class BaseRepository
+    public abstract class BaseRepository
     {
         static SqlConnection _cn = null;
 
-        public static T ExecuteScalar<T>(string sentencia, object parametros = null)
+
+        protected static T ExecuteScalar<T>(string sentencia, object parametros = null)
         {
             OpenConnection();
             if (sentencia == null) return default(T);
@@ -26,7 +27,7 @@ namespace Public.DataAccess
             return (_cn.ExecuteScalar<T>(sentencia, paramList));
         }
 
-        public static void ExecuteScalarList(string sentencia, List<object> parametros = null)
+        protected static void ExecuteScalarList(string sentencia, List<object> parametros = null)
         {
             OpenConnection();
 
@@ -35,7 +36,9 @@ namespace Public.DataAccess
             _cn.Execute(sentencia, parametros);
         }
 
-        public static List<T> Query<T>(string sentencia, object parametros = null)
+
+
+        protected static List<T> Query<T>(string sentencia, object parametros = null)
         {
             OpenConnection();
             if (sentencia == null) return default(List<T>);
@@ -44,7 +47,7 @@ namespace Public.DataAccess
             return (_cn.Query<T>(sentencia, paramList)).ToList();
         }
 
-        public static List<T> QueryAsync<T>(string sentencia, object parametros = null)
+        protected static List<T> QueryAsync<T>(string sentencia, object parametros = null)
         {
             OpenConnection();
             if (sentencia == null) return default(List<T>);
@@ -53,7 +56,7 @@ namespace Public.DataAccess
             return (_cn.QueryAsync<T>(sentencia, paramList)).Result.ToList();
         }
 
-        public static List<T> QueryStoredProcedure<T>(string StoredPName, object parametros = null)
+        protected static List<T> QueryStoredProcedure<T>(string StoredPName, object parametros = null)
         {
             OpenConnection();
             if (StoredPName == null) return default(List<T>);
@@ -63,7 +66,7 @@ namespace Public.DataAccess
 
         }
 
-        public static ListadoRecords<T> QueryConPaginacion<T>(string sentencia, object parametros = null, Public.DataAccess.Models.Paginacion pagina = null) where T : BaseDataRecord
+        protected static ListadoRecords<T> QueryConPaginacion<T>(string sentencia, object parametros = null, Paginacion pagina = null) where T : BaseDataRecord
         {
             try
             {
@@ -137,7 +140,7 @@ namespace Public.DataAccess
             }
         }
 
-        public static List<dynamic> Query(string sentencia, object parametros = null)
+        protected static List<dynamic> Query(string sentencia, object parametros = null)
         {
             OpenConnection();
             if (sentencia == null) return default(List<dynamic>);
@@ -146,7 +149,7 @@ namespace Public.DataAccess
             return (_cn.Query(sentencia, paramList)).ToList();
         }
 
-        public static void CrealLogEntry(string pLogTipo, string pLogComentario, string pUsuarioID, string pSecRemoteIP, int pBancaID)
+        protected static void CrealLogEntry(string pLogTipo, string pLogComentario, string pUsuarioID, string pSecRemoteIP, int pBancaID)
         {
 
             //ExecuteScalar<int>(@"
@@ -154,6 +157,8 @@ namespace Public.DataAccess
             //        VALUES (@SesionId,GETDATE(),@Tipo,@Descripcion, @Ip);
             //        SELECT @@ROWCOUNT;
             //   ", new { SesionId = sesion, Tipo = tipo, Descripcion = descripcion, Ip = direccionIp });
+
+
 
             QueryStoredProcedure<object>("Hac_Hacienda_Guardar_Log", new { LogTipo = pLogTipo, LogComentario = pLogComentario, UsuarioID = pUsuarioID, SecRemoteIP = pSecRemoteIP, BancaID = pBancaID });
         }
@@ -185,7 +190,7 @@ namespace Public.DataAccess
             }
         }
 
-        public static SqlDataRecord toDobleIdSqlDataRecord(int? Id1, int? Id2)
+        protected static SqlDataRecord toDobleIdSqlDataRecord(int? Id1, int? Id2)
         {
             var result = new SqlDataRecord(new SqlMetaData[] {
                 new SqlMetaData("Id1", SqlDbType.Int),

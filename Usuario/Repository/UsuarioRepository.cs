@@ -11,7 +11,7 @@ namespace Usuarios.Repository
     public class UsuarioRepository : BaseRepository
     {
 
-        public static ResponseContenido<Usuario> RegistrarUsuario(Usuario usuario)
+        public static ResponseContenido<Usuario> Registrar(Usuario usuario)
         {
             var response = new ResponseContenido<Usuario>();
             try
@@ -43,7 +43,7 @@ namespace Usuarios.Repository
             return resultados.Count > 0 ? resultados[0] : null;
         }
 
-        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {

@@ -9,10 +9,12 @@ using Authentication.Models;
 using Authentication.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Public.DataAccess.Models;
 using Usuarios.Model;
+using Usuarios.Repository;
 
 namespace ViaCloud.Controllers
 {
@@ -21,38 +23,65 @@ namespace ViaCloud.Controllers
     public class AuthenticationController : ControllerBase
     {
 
-        [HttpPost, Route("Prueba"), Authorize]
-        public void Prueba()
+        private readonly IConfiguration _config;
+        public AuthenticationController(IConfiguration configuration)
         {
-            string x = "";
+            this._config = configuration;
         }
+
 
         [HttpPost, Route("Login")]
-        public IActionResult Login(UserForLogin userForLogin)
+        public ResponseContenido<Usuario> Login(UserForLogin userForLogin)
         {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var response = new ResponseContenido<Usuario>();
+            try
+            {
+                var user = UsuarioRepository.GetUsuario(userForLogin.Usuario);
 
-            var tokeOptions = new JwtSecurityToken(
-                issuer: "http://localhost:44399",
-                audience: "http://localhost:44399",
-                claims: new List<Claim>(),
-                expires: DateTime.Now.AddMinutes(5),
-                signingCredentials: signinCredentials
-            );
+                if (user == null)
+                    throw new Exception("Este usuario no existe.");
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-            return Ok(new { Token = tokenString });
+                if (!AuthenticationRepository.VerifyPassswordHash(userForLogin.Password, user.PasswordHash, user.PasswordSalt))
+                    throw new Exception("Password inválido.");
 
-        }
+                var claims = new[]
+                {
+                     new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                     new Claim(ClaimTypes.Name,user.UserName),
+                     new Claim(ClaimTypes.Locality,user.SucursalID.ToString()),
 
-        [HttpPost, Route("Registrar")]
-        public ResponseContenido<Usuario> Registrar(Usuario usuario)
-        {
-            var response = AuthenticationRepository.Registrar(usuario);
+                };
+
+                //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("TOKEN_SECRETO")));
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.
+                    GetBytes(this._config.GetSection("AppSettings:Token").Value));
+
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(claims),
+                    Expires = DateTime.Now.AddDays(1),
+                    SigningCredentials = creds
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+
+                string tokenClient = tokenHandler.WriteToken(token);
+
+                response.Valores.Add(tokenClient);
+
+            }
+            catch (Exception e)
+            {
+                response.OK = false;
+                response.Errores.Add(e.Message);
+            }
             return response;
         }
-
 
     }
 }

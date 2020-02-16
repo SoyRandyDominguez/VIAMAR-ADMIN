@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
             Clave: ['', Validators.required]
         });
 
-        this.service.DoPostAny(DataApi.Authentication, "Registrar", {}).subscribe(response => {
+        this.service.DoPostAny(DataApi.Authentication, "Login", {"Usuario":"RDominguez", "Password":"lapizconciente"}).subscribe(response => {
             console.log(response);
         }, error => {
             console.log(error);

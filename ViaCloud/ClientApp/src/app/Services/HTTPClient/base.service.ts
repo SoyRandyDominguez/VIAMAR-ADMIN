@@ -5,7 +5,7 @@ import { DashBoardCardsModel } from '../../Models/SharedComponentsModels/DashBoa
 
 
 export enum DataApi {
-    Usuarios = 1,
+    Usuario = 1,
     FuncionAdmin = 2,
     MZonas = 3,
     MUsuario = 4,
@@ -61,7 +61,7 @@ export class BaseService {
     baseUrl: string;
 
     dataApiRootMap: { [api: string]: string } = {
-        "1": "api/UsuarioData",
+        "1": "api/Usuario",
         "2": "api/FuncionAdminData",
         "3": "api/MZonasData",
         "4": "api/MUsuariosData",

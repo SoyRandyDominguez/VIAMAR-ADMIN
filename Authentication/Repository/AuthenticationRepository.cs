@@ -9,39 +9,22 @@ using Authentication.Query;
 using Public.DataAccess.Models;
 using Usuarios.Model;
 using Usuarios.Repository;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Authentication.Repository
 {
     public class AuthenticationRepository : BaseRepository
     {
-        public static ResponseContenido<Usuario> Login(UserForLogin userForLogin)
-        {
-            var response = new ResponseContenido<Usuario>();
-            try
-            {
-                var user = UsuarioRepository.GetUsuario(userForLogin.Usuario);
 
-                if (user == null)
-                    throw new Exception("Este usuario no existe.");
+      
+        //public static ResponseContenido<Usuario> Login(UserForLogin userForLogin)
+        //{
+           
+        //}
 
-                if (!VerifyPassswordHash(userForLogin.Password, user.PasswordHash, user.PasswordSalt))
-                    throw new Exception("Password inválido.");
-
-
-
-
-
-
-            }
-            catch (Exception e)
-            {
-                response.OK = false;
-                response.Errores.Add(e.Message);
-            }
-            return response;
-        }
-
-        private static bool VerifyPassswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        public static bool VerifyPassswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
             {
