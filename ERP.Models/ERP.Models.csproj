@@ -44,20 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataRecord\AuthUserRecord.cs" />
-    <Compile Include="DataRecord\HCertificado.cs" />
-    <Compile Include="DataRecord\ComboBoxRecord.cs" />
-    <Compile Include="DataRecord\MUsuarioPermisosTreeviewRecord.cs" />
-    <Compile Include="DataRecord\MUsuarioRecord.cs" />
-    <Compile Include="DataRecord\MUsuariosRecord.cs" />
-    <Compile Include="DataRecord\MUsuarioPermisosRecord.cs" />
-    <Compile Include="DataRecord\UsuarioNuevoRecord.cs" />
+    <Compile Include="Common\ComboBox.cs" />
     <Compile Include="Models\Paginacion.cs" />
     <Compile Include="DataRecord\BaseDataRecord.cs" />
-    <Compile Include="DataRecord\FuncionAdminRecord.cs" />
-    <Compile Include="DataRecord\ListadoRecords.cs" />
-    <Compile Include="DataRecord\PermisoUsuarioRecord.cs" />
-    <Compile Include="DataRecord\UsuarioRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

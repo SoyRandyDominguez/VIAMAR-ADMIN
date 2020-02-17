@@ -1,5 +1,4 @@
 ﻿using Authentication.Interface;
-using Authentication.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

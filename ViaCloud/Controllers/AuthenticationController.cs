@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using Authentication.Models;
 using Authentication.Repository;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Public.DataAccess.Models;
+using Public.Model;
 using Usuarios.Model;
 using Usuarios.Repository;
 
@@ -31,7 +26,7 @@ namespace ViaCloud.Controllers
 
 
         [HttpPost, Route("Login")]
-        public ResponseContenido<Usuario> Login(UserForLogin userForLogin)
+        public ResponseContenido<Usuario> Login(UsuarioForLogin userForLogin)
         {
             var response = new ResponseContenido<Usuario>();
             try
@@ -87,6 +82,33 @@ namespace ViaCloud.Controllers
             }
             return response;
         }
+
+
+
+        [HttpPost, Route("ValidateUser")]
+        public ResponseContenido<ComboBox> ValidateUser(UsuarioForLogin userForLogin)
+        {
+            var response = new ResponseContenido<ComboBox>();
+            try
+            {
+                var user = UsuarioRepository.GetUsuario(userForLogin.Usuario);
+
+                if (user == null)
+                    throw new Exception("Este usuario no existe.");
+
+                if (!AuthenticationRepository.VerifyPassswordHash(userForLogin.Password, user.PasswordHash, user.PasswordSalt))
+                    throw new Exception("Password inválido.");
+
+                //var sucursales = 
+            }
+            catch (Exception e)
+            {
+                response.OK = false;
+                response.Errores.Add(e.Message);
+            }
+            return response;
+        }
+
 
     }
 }

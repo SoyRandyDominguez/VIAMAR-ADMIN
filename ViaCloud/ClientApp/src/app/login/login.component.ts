@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { UserAuthModel } from '../Models/Auth/user-auth-model';
 import { AuthenticationService, } from '../Services/Authentication/autenticacion.service';
 import { BaseService, DataApi } from '../Services/HTTPClient/base.service';
-import { LibrariesService } from '../Services/Common/libraries-service.service';
 import { first } from 'rxjs/operators';
 import {
     trigger,
@@ -15,6 +13,9 @@ import {
     transition,
     // ...
 } from '@angular/animations';
+import { ToastService } from '../Services/Common/toast.service';
+import { ComboBox } from '../Models/Common/ComboBox';
+import { UsuarioForLogin } from '../Models/Usuarios/UsuarioForLogin';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
     selectedSucursal: ComboBox = null;
 
     sucursales: ComboBox[] = null
+    usuario: UsuarioForLogin = null
 
     //sucursales: ComboBox[] = [
     //  { codigo: 1, nombre: 'SERVICIOS MOVIL NO. 1', grupo: 'VIAMAR, S.A.', grupoID: '1' },
@@ -66,15 +68,15 @@ export class LoginComponent implements OnInit {
         public formBuilder: FormBuilder,
         public route: ActivatedRoute,
         public router: Router,
-        public service: BaseService,
+        public httpService: BaseService,
         public permissionsService: NgxPermissionsService,
-        public library: LibrariesService,
+        public toastService: ToastService,
         public authenticationService: AuthenticationService
     ) {
         // redirect to home if already logged in
         if (authenticationService.loggedIn()) {
             this.router.navigate(['/']);
-        } 
+        }
     }
 
     cancelar() {
@@ -83,8 +85,6 @@ export class LoginComponent implements OnInit {
         this.loginForm.reset();
         this.submitted = false;
     }
-
-
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -103,89 +103,78 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
 
-
         this.submitted = true;
         //stop here if form is invalid
         if (this.loginForm.invalid) {
             return;
         }
 
-        this.loading = true;
-        this.authenticationService.login(this.f.Username.value, this.f.Clave.value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    if (this.authenticationService.loggedIn()) {
-                        this.loading = false;
-
-                        //this.sucursales = data.valores[0];
-
-                        if (this.sucursales.length > 0) {
-                            this.estilo1 = { 'transform': 'rotateY(-180deg)' };
-                            this.estilo2 = { 'transform': 'rotateY(0deg)' };
-                        }
-
-                    } else {
-
-                        this.loading = false;
-                        this.loginForm.reset();
-                        this.submitted = false;
-
-                        this.library.showToast(data.errores[0].toString(), { classname: 'bg-danger text-light', icon: "fas fa-exclamation-triangle" });
-                        //this.router.navigateByUrl("/login");
-                    }
-                },
-                error => {
-                    this.library.showToast("Error interno! Mensaje: " + error, { classname: 'bg-danger text-light', icon: "fas fa-exclamation-triangle" });
-                    this.error = error;
-                    this.loading = false;
-                });
+        this.validateUser();
     }
 
+    validateUser() {
+
+        this.loading = true;
+
+        this.usuario = {
+            usuario: this.f.Username.value,
+            password: this.f.Clave.value,
+            sucursalID: 0
+        };
+
+        this.httpService.DoPostAny<ComboBox>(DataApi.Authentication, "ValidateUser", this.usuario).subscribe(response => {
+
+            if (!response || !response.ok) {
+                this.error = response.errores[0];
+                console.error(this.error)
+                return;
+            }
+
+            this.sucursales = response.records;
+            this.girarLogin();
+
+        }, error => {
+            this.toastService.Danger("Error interno! Mensaje: " + error);
+            this.error = error;
+            this.loading = false;
+        });
+
+    }
 
 
     Entrar() {
         this.loading = true;
-        if (this.selectedSucursal != null) {
 
+        if (this.selectedSucursal) {
 
-            let currentUser: UserAuthModel = JSON.parse(localStorage.getItem('currentUser'));
-            console.log(currentUser);
-            console.log(this.selectedSucursal);
-            currentUser.sucursalID = this.selectedSucursal.codigo;
-            currentUser.companiaID = Number(this.selectedSucursal.grupoID);
-            console.log(currentUser);
+            this.usuario.sucursalID = this.selectedSucursal.codigo;
 
-            localStorage.removeItem('currentUser');
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            this.authenticationService.login(this.usuario).subscribe(response => {
 
-            this.router.navigateByUrl("/home");
+                if (!response || !response.ok) {
+                    this.toastService.Danger(response.errores[0]);
+                    return;
+                }
 
+                this.router.navigateByUrl("/home");
+
+            }, error => {
+                this.toastService.Danger("Error interno! Mensaje: " + error);
+                this.error = error;
+                this.loading = false;
+            });
         }
-
-
-
-        this.loading = false;
-
-
-
-
-
-
 
     }
 
+    girarLogin() {
+
+        this.estilo1 = { 'transform': 'rotateY(-180deg)' };
+        this.estilo2 = { 'transform': 'rotateY(0deg)' };
+    }
 
 
 }
 
 
-export class ComboBox {
 
-    codigo: number;
-    nombre: string;
-    grupo: string
-    grupoID: string;
-
-
-}

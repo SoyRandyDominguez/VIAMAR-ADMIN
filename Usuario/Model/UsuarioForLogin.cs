@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Authentication.Models
+namespace Usuarios.Model
 {
-    public class UserForLogin
+    public class UsuarioForLogin
     {
         public string Usuario { get; set; }
         public string Password { get; set; }

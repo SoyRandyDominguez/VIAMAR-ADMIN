@@ -3,14 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserAuthModel } from '../../Models/Auth/user-auth-model';
 import { DataApi, BaseService } from '../HTTPClient/base.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Usuarios } from '../../Models/Usuarios/usuarios';
-import { Usuario } from '../../Models/Usuarios/Usuario';
 import { UsuarioForLogin } from '../../Models/Usuarios/UsuarioForLogin';
 import { Router } from '@angular/router';
 
@@ -21,7 +18,7 @@ export class AuthenticationService {
     helper = new JwtHelperService();
     tokenDecoded: any;
 
-    constructor(public service: BaseService, public permissionsService: NgxPermissionsService, private router:Router) {
+    constructor(public service: BaseService, public permissionsService: NgxPermissionsService, private router: Router) {
     }
 
 
@@ -36,10 +33,10 @@ export class AuthenticationService {
     }
 
 
-    login(username: string, password: string) {
+    login(usuario: UsuarioForLogin) {
 
         return this.service.DoPostAny<UsuarioForLogin>(DataApi.Authentication,
-            "Login", { "Usuario": username, "Password": password })
+            "Login", usuario)
             .pipe(
                 map(res => {
                     // login successful if there's a jwt token in the response  && user.token

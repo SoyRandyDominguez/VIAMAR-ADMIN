@@ -1,18 +1,18 @@
-﻿using System;
+﻿using ERP.Models.DataRecord;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERP.Models.DataRecord
+namespace ERP.Models.Common
 {
-    public class ComboBoxRecord : BaseDataRecord
+    public class ComboBox : BaseDataRecord
     {
-        public  int Codigo { get; set; }
+        public int Codigo { get; set; }
         public string Nombre { get; set; }
         public string Grupo { get; set; }
         public int GrupoID { get; set; }
-        public bool disabled { get; set; }
     }
-  
 }
+ 

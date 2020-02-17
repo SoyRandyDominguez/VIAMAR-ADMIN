@@ -92,7 +92,7 @@
                 </ng-select>
 
                 <div class="input-group center mt-3">
-                  <button (click)=" Entrar()" class="btn btn-primary-light btn-round" [disabled]="loading">
+                  <button (click)=" Entrar()" class="btn btn-primary-light btn-round" [disabled]="loading || !selectedSucursal">
                     Entrar
                     <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   </button>
