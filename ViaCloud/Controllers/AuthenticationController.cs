@@ -36,7 +36,7 @@ namespace ViaCloud.Controllers
             var response = new ResponseContenido<Usuario>();
             try
             {
-                var user = UsuarioRepository.GetUsuario(userForLogin.Usuario);
+                var user = UsuarioRepository.GetUsuarioForToken(userForLogin.Usuario);
 
                 if (user == null)
                     throw new Exception("Este usuario no existe.");
@@ -44,11 +44,16 @@ namespace ViaCloud.Controllers
                 if (!AuthenticationRepository.VerifyPassswordHash(userForLogin.Password, user.PasswordHash, user.PasswordSalt))
                     throw new Exception("Password inválido.");
 
+                //var permisos = UsuarioRepository.
+
+
                 var claims = new[]
                 {
                      new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                      new Claim(ClaimTypes.Name,user.UserName),
                      new Claim(ClaimTypes.Locality,user.SucursalID.ToString()),
+                     new Claim(ClaimTypes.Role,user.Rol),
+                     new Claim(ClaimTypes.Email, user.Email),
 
                 };
 

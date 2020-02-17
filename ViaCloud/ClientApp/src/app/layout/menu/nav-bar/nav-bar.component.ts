@@ -24,7 +24,7 @@ export class NavBarComponent implements OnInit {
     public  permissionsService: NgxPermissionsService,
      public authenticationService: AuthenticationService
   ) {
-    this.authenticationService.currentUser.subscribe(x => { this.currentUser = x; });
+    //this.authenticationService.currentUser.subscribe(x => { this.currentUser = x; });
    
     }
 

@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
         public authenticationService: AuthenticationService
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) {
+        if (authenticationService.loggedIn()) {
             this.router.navigate(['/']);
         } 
     }
@@ -90,12 +90,6 @@ export class LoginComponent implements OnInit {
         this.loginForm = this.formBuilder.group({
             Username: ['', Validators.required],
             Clave: ['', Validators.required]
-        });
-
-        this.service.DoPostAny(DataApi.Usuario, "Registrar", { "UserName": "RDominguez", "Password": "lapizconciente" }).subscribe(response => {
-            console.log(response);
-        }, error => {
-            console.log(error);
         });
 
 
@@ -121,10 +115,10 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    if (data.ok && data.records[0].token) {
+                    if (this.authenticationService.loggedIn()) {
                         this.loading = false;
 
-                        this.sucursales = data.valores[0];
+                        //this.sucursales = data.valores[0];
 
                         if (this.sucursales.length > 0) {
                             this.estilo1 = { 'transform': 'rotateY(-180deg)' };

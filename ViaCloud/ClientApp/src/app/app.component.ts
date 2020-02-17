@@ -12,7 +12,7 @@ import { AuthenticationService } from './Services/Authentication/autenticacion.s
 })
 export class AppComponent implements OnInit{
 
-  currentUser: UserAuthModel;
+  //currentUser: UserAuthModel;
 
   constructor(
     public router: Router,
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
     public permissionsService: NgxPermissionsService
   ) {
 
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    //this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
       
