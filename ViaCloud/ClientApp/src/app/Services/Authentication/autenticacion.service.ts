@@ -18,7 +18,10 @@ export class AuthenticationService {
     helper = new JwtHelperService();
     tokenDecoded: any;
 
-    constructor(public service: BaseService, public permissionsService: NgxPermissionsService, private router: Router) {
+    constructor(public service: BaseService,
+        public permissionsService: NgxPermissionsService,
+        private router: Router,
+    ) {
     }
 
 

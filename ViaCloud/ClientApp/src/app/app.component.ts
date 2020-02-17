@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserAuthModel } from './Models/Auth/user-auth-model';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthenticationService } from './Services/Authentication/autenticacion.service';
  

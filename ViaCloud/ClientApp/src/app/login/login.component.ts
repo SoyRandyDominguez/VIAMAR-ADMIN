@@ -4,15 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthenticationService, } from '../Services/Authentication/autenticacion.service';
 import { BaseService, DataApi } from '../Services/HTTPClient/base.service';
-import { first } from 'rxjs/operators';
-import {
-    trigger,
-    state,
-    style,
-    animate,
-    transition,
-    // ...
-} from '@angular/animations';
 import { ToastService } from '../Services/Common/toast.service';
 import { ComboBox } from '../Models/Common/ComboBox';
 import { UsuarioForLogin } from '../Models/Usuarios/UsuarioForLogin';
@@ -31,39 +22,16 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     returnUrl: string;
-    error = '';
+    error: string = null;
     selectedSucursal: ComboBox = null;
 
     sucursales: ComboBox[] = null
     usuario: UsuarioForLogin = null
-
-    //sucursales: ComboBox[] = [
-    //  { codigo: 1, nombre: 'SERVICIOS MOVIL NO. 1', grupo: 'VIAMAR, S.A.', grupoID: '1' },
-    //  { codigo: 2, nombre: 'JAGUAR DOMINICANA', grupo: 'VIAMAR, S.A.', grupoID: '1' },
-    //  { codigo: 3, nombre: 'QUICK LANE HIGUEY', grupo: 'VIAMAR, S.A.', grupoID: '1' },
-    //  { codigo: 4, nombre: 'QUICK PARTS/MARMOLERA', grupo: 'VIAMAR, S.A.', grupoID: '1' },
-    //  { codigo: 5, nombre: 'OPORTUNITY CARS', grupo: 'VIAMAR, S.A.', grupoID: '1' },
-    //  { codigo: 6, nombre: 'NEGOCIOS DIVERSOS (PRINCIPAL)', grupo: 'VIAMAR, S.A.', grupoID: '1' },
-
-
-    //  { codigo: 37, nombre: 'ECO MOTORS (PRINCIPAL)', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
-    //  { codigo: 38, nombre: 'ECOMOTORS  (HIGUEY)', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
-    //  { codigo: 39, nombre: 'NEGOCIOS DIVERSOS 27 FEB.', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
-    //  { codigo: 40, nombre: 'ECOMOTORS  (SANTIAGO EST.)', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
-    //  { codigo: 41, nombre: 'ECOMOTORS  (SANTIAGO DUARTE)', grupo: 'ECO MOTORS S.A.S.', grupoID: '13' },
-
-
-
-    //  { codigo: 26, nombre: 'QUIEREME COMO SOY', grupo: 'QUIEREME COMO SOY', grupoID: '5' },
-
-    //  { codigo: 27, nombre: 'FERALCO (MAXIMO GOMEZ)', grupo: 'FERALCO', grupoID: '6' },
-
-    //  { codigo: 29, nombre: 'QUICK LANE/QUICK PARTS SAN FCO', grupo: 'AUTOMARE', grupoID: '8' },
-    //]
-
-
     estilo1 = null;
     estilo2 = null;
+    mostrarLogin = true;
+
+
     constructor(
         public formBuilder: FormBuilder,
         public route: ActivatedRoute,
@@ -84,6 +52,9 @@ export class LoginComponent implements OnInit {
         this.estilo2 = null;
         this.loginForm.reset();
         this.submitted = false;
+        this.mostrarLogin = true;
+        this.selectedSucursal = null;
+        this.error = null;
     }
 
     ngOnInit() {
@@ -93,9 +64,6 @@ export class LoginComponent implements OnInit {
         });
 
 
-        this.loginForm.valueChanges.subscribe(x => { this.error = x; });
-        // get return url from route parameters or default to '/'
-        //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     // convenience getter for easy access to form fields
@@ -126,12 +94,13 @@ export class LoginComponent implements OnInit {
 
             if (!response || !response.ok) {
                 this.error = response.errores[0];
-                console.error(this.error)
+                this.loading = false;
                 return;
             }
 
             this.sucursales = response.records;
             this.girarLogin();
+            this.loading = false;
 
         }, error => {
             this.toastService.Danger("Error interno! Mensaje: " + error);
@@ -153,13 +122,16 @@ export class LoginComponent implements OnInit {
 
                 if (!response || !response.ok) {
                     this.toastService.Danger(response.errores[0]);
+                    this.error = response.errores[0];
+                    this.loading = false;
                     return;
                 }
 
                 this.router.navigateByUrl("/home");
-
+                this.loading = false;
             }, error => {
                 this.toastService.Danger("Error interno! Mensaje: " + error);
+                console.log(error)
                 this.error = error;
                 this.loading = false;
             });
@@ -171,6 +143,8 @@ export class LoginComponent implements OnInit {
 
         this.estilo1 = { 'transform': 'rotateY(-180deg)' };
         this.estilo2 = { 'transform': 'rotateY(0deg)' };
+        this.mostrarLogin = false;
+        this.error = null;
     }
 
 

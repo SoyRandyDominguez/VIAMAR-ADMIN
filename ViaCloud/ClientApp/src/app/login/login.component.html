@@ -39,44 +39,34 @@
                   </div>
 
 
-                  <div class="input-group center">
-                    <button type="submit" class="btn btn-primary btn-round" [disabled]="loading">
+                  <div class="input-group center" *ngIf="mostrarLogin">
+                    <button type="submit" class="btn btn-primary btn-round" [disabled]="loading || loginForm.invalid">
                       Entrar
                       <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </button>
                   </div>
+
                   <div class="row">
-                    <p class="forget-p">No tienes una cuenta? <span class="text-primary">Contáctanos</span></p>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-
-                      <div *ngIf="f.Username.errors" class="invalid-feedback">
-                        <p *ngIf="f.Username.errors.required" class="small-info">El Usuario es requerido</p>
-                      </div>
-                      <div *ngIf="f.Clave.errors" class="invalid-feedback">
-                        <p *ngIf="f.Clave.errors.required" class="small-info">La contraseña es requerida</p>
-                      </div>
-
-                    </div>
-
-                    <p class="small-info">Grupo Viamar</p>
+                    <p class="small-info text-danger">{{error}}</p>
                   </div>
 
+                  <div class="row">
+                    <p class="forget-p">
+                      ¿No tienes una cuenta? <a class="text-primary undeli" href="tel:+18095653111"><u>Contáctanos</u>  <i class="fa fa-phone"></i></a>
+                    </p>
+                  </div>
 
-                  
                 </div>
 
-
               </form>
-
-
             </div>
+
+
             <div class="card-back " [ngStyle]="estilo2">
 
               <div class="text-box-cont">
-                <div class=" m-auto font-weight-bold text-black" style="font-size:1.0em;">
-                  Bienvenido A ViaCloud del Grupo Viamar
+                <div class=" m-auto font-weight-bold text-primary" style="font-size:1.0em;">
+                  ViaCloud | Grupo Viamar
                 </div>
                 <div class=" m-auto  text-black">
                   Porfavor seleccione la sucursal a la que pertenece.
@@ -91,7 +81,7 @@
                   </ng-template>
                 </ng-select>
 
-                <div class="input-group center mt-3">
+                <div class="input-group center mt-3" *ngIf="!mostrarLogin">
                   <button (click)=" Entrar()" class="btn btn-primary-light btn-round" [disabled]="loading || !selectedSucursal">
                     Entrar
                     <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -105,6 +95,9 @@
                   </button>
                 </div>
 
+                <div class="input-group center mt-3">
+                  <p class="small-info text-danger">{{error}}</p>
+                </div>
 
               </div>
 
@@ -112,7 +105,6 @@
 
             </div>
           </div>
-
 
 
         </div>
@@ -124,7 +116,7 @@
             <div class="ditk-inf w-100">
               <div class="text-box-cont">
                 <div class=" m-auto font-weight-bold" style="font-size:1.5em;">
-                  <i class="fab fa-asymmetrik"></i> Grupo Viamar
+                  <i class="fa fa-lock"></i> Grupo Viamar
                 </div>
 
               </div>

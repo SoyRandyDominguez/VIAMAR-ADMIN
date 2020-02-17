@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using Authentication.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Public.DataAccess.Models;
 using Usuarios.Model;
 using Usuarios.Repository;

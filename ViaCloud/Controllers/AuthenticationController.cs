@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Public.DataAccess.Models;
+using Public.DataAccess.Repository;
 using Public.Model;
 using Usuarios.Model;
 using Usuarios.Repository;
@@ -38,39 +39,16 @@ namespace ViaCloud.Controllers
 
                 if (!AuthenticationRepository.VerifyPassswordHash(userForLogin.Password, user.PasswordHash, user.PasswordSalt))
                     throw new Exception("Password inválido.");
+                 
+                if (user.Rol == null || user.Rol == "")
+                    throw new Exception("Este usuario no tiene un rol asignado.");
+
 
                 //var permisos = UsuarioRepository.
 
 
-                var claims = new[]
-                {
-                     new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-                     new Claim(ClaimTypes.Name,user.UserName),
-                     new Claim(ClaimTypes.Locality,user.SucursalID.ToString()),
-                     new Claim(ClaimTypes.Role,user.Rol),
-                     new Claim(ClaimTypes.Email, user.Email),
 
-                };
-
-                //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("TOKEN_SECRETO")));
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.
-                    GetBytes(this._config.GetSection("AppSettings:Token").Value));
-
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.Now.AddDays(1),
-                    SigningCredentials = creds
-                };
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-
-                string tokenClient = tokenHandler.WriteToken(token);
+                string tokenClient = AuthenticationRepository.GenerateJwtToken(user, userForLogin.SucursalID);
 
                 response.Valores.Add(tokenClient);
 
@@ -99,7 +77,12 @@ namespace ViaCloud.Controllers
                 if (!AuthenticationRepository.VerifyPassswordHash(userForLogin.Password, user.PasswordHash, user.PasswordSalt))
                     throw new Exception("Password inválido.");
 
-                //var sucursales = 
+                var sucursales = ComboBoxRepository.GetSucursalesUsuario(user.Id);
+
+                if (sucursales == null || sucursales.Count < 1)
+                    throw new Exception("Este usuario no posee sucursales");
+
+                response.Records = sucursales;
             }
             catch (Exception e)
             {

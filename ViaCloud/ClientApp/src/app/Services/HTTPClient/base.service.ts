@@ -7,15 +7,6 @@ import { RequestContenido, RespuestaContenido, Paginacion } from '../../Models/H
 
 const helper = new JwtHelperService();
 
-
-
-
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-    })
-}
-
 export enum DataApi {
     Usuario = 1,
     Authentication = 2,
@@ -90,7 +81,7 @@ export class BaseService {
     }
 
     public DoPostAny<T>(api: DataApi, Method: string, request: any): Observable<RespuestaContenido<T>> {
-        return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request, httpOptions);
+        return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
     }
 
     public GetComboBox<T>(Method: string): Observable<RespuestaContenido<T>> {
