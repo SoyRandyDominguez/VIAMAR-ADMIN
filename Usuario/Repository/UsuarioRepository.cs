@@ -49,6 +49,12 @@ namespace Usuarios.Repository
             return resultados.Count > 0 ? resultados[0] : null;
         }
 
+        public static List<Permiso> GetPermisos(int usuarioID)
+        {
+            var resultados = Query<Permiso>(UsuarioQuery.selectUsuarioPermisos, new { usuarioID });
+            return resultados.Count > 0 ? resultados : null;
+        }
+
         public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())

@@ -64,43 +64,47 @@
 
             <div class="card-back " [ngStyle]="estilo2">
 
-              <div class="text-box-cont">
-                <div class=" m-auto font-weight-bold text-primary" style="font-size:1.0em;">
-                  ViaCloud | Grupo Viamar
+              <div class="row w-100">
+                <div class="col-md-12">
+                  <div class="text-box-cont">
+                    <div class=" m-auto font-weight-bold text-primary" style="font-size:1.0em;">
+                      ViaCloud | Grupo Viamar
+                    </div>
+                    <div class=" m-auto  text-black pt-3">
+                      Selecciona una sucursal
+                    </div>
+
+                    <ng-select class="w-100 m-0 p-0" [items]="sucursales"
+                               bindLabel="nombre"
+                               groupBy="grupo"
+                               [(ngModel)]="selectedSucursal">
+                      <ng-template ng-optgroup-tmp let-item="item">
+                        {{item.grupo || 'Unnamed group'}}
+                      </ng-template>
+                    </ng-select>
+
+                    <div class="input-group center mt-3" *ngIf="!mostrarLogin">
+                      <button (click)=" Entrar()" class="btn btn-primary-light btn-round" [disabled]="loading || !selectedSucursal">
+                        Entrar
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      </button>
+                    </div>
+
+
+                    <div class="input-group center mt-3">
+                      <button (click)="cancelar()" class="btn btn-outline-info btn-round">
+                        Volver atras
+                      </button>
+                    </div>
+
+                    <div class="input-group center mt-3">
+                      <p class="small-info text-danger">{{error}}</p>
+                    </div>
+
+                  </div>
+
                 </div>
-                <div class=" m-auto  text-black">
-                  Porfavor seleccione la sucursal a la que pertenece.
-                </div>
-
-                <ng-select class="w-100 m-0 p-0" [items]="sucursales"
-                           bindLabel="nombre"
-                           groupBy="grupo"
-                           [(ngModel)]="selectedSucursal">
-                  <ng-template ng-optgroup-tmp let-item="item">
-                    {{item.grupo || 'Unnamed group'}}
-                  </ng-template>
-                </ng-select>
-
-                <div class="input-group center mt-3" *ngIf="!mostrarLogin">
-                  <button (click)=" Entrar()" class="btn btn-primary-light btn-round" [disabled]="loading || !selectedSucursal">
-                    Entrar
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                  </button>
-                </div>
-
-
-                <div class="input-group center mt-3">
-                  <button (click)="cancelar()" class="btn btn-outline-info btn-round">
-                    Volver atras
-                  </button>
-                </div>
-
-                <div class="input-group center mt-3">
-                  <p class="small-info text-danger">{{error}}</p>
-                </div>
-
               </div>
-
 
 
             </div>

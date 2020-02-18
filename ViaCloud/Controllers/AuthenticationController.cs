@@ -39,18 +39,21 @@ namespace ViaCloud.Controllers
 
                 if (!AuthenticationRepository.VerifyPassswordHash(userForLogin.Password, user.PasswordHash, user.PasswordSalt))
                     throw new Exception("Password inválido.");
-                 
+
                 if (user.Rol == null || user.Rol == "")
                     throw new Exception("Este usuario no tiene un rol asignado.");
 
 
-                //var permisos = UsuarioRepository.
+                var permisos = UsuarioRepository.GetPermisos(user.Id);
 
+                if (permisos == null || permisos.Count < 1)
+                    throw new Exception("Este usuario no tiene permisos asignados.");
 
 
                 string tokenClient = AuthenticationRepository.GenerateJwtToken(user, userForLogin.SucursalID);
 
                 response.Valores.Add(tokenClient);
+                response.Valores.Add(permisos);
 
             }
             catch (Exception e)

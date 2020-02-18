@@ -10,6 +10,10 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { UsuarioForLogin } from '../../Models/Usuarios/UsuarioForLogin';
 import { Router } from '@angular/router';
+import { Permiso } from '../../Models/Usuarios/Permiso';
+import { error } from '@angular/compiler/src/util';
+import { ToastService } from '../Common/toast.service';
+import { Usuario } from '../../Models/Usuarios/Usuario';
 
 
 @Injectable({ providedIn: 'root' })
@@ -18,9 +22,10 @@ export class AuthenticationService {
     helper = new JwtHelperService();
     tokenDecoded: any;
 
-    constructor(public service: BaseService,
+    constructor(public httpService: BaseService,
         public permissionsService: NgxPermissionsService,
         private router: Router,
+        private toastService: ToastService,
     ) {
     }
 
@@ -38,7 +43,7 @@ export class AuthenticationService {
 
     login(usuario: UsuarioForLogin) {
 
-        return this.service.DoPostAny<UsuarioForLogin>(DataApi.Authentication,
+        return this.httpService.DoPostAny<UsuarioForLogin>(DataApi.Authentication,
             "Login", usuario)
             .pipe(
                 map(res => {
@@ -50,13 +55,10 @@ export class AuthenticationService {
                         localStorage.setItem("token", token);
                         this.setDecodeToken();
 
-                        //let Perms = [];
-                        //res.records[0].permisos.forEach(x => { Perms.push(x.permisoNombre); });
-                        //this.permissionsService.loadPermissions(Perms);
+                        let permisos: Permiso[] = res.valores[1];
+                        console.table(permisos.map(p => p.nombre));
+                        this.permissionsService.loadPermissions(permisos.map(p => p.nombre));
 
-                        //res.records[0].permisos = [];
-                        //localStorage.setItem('currentUser', JSON.stringify(res.records[0]));
-                        //this.currentUserSubject.next(res.records[0]);
                     }
                     return res;
                 }));
@@ -69,4 +71,27 @@ export class AuthenticationService {
         localStorage.removeItem('token');
         this.router.navigateByUrl('/login');
     }
+
+    setPermissions(): void {
+        console.log(Number(this.tokenDecoded.nameid))
+        this.httpService.DoPostAny<any>(DataApi.Usuario, "GetPermisosUsuario", { "Id": Number(this.tokenDecoded.nameid) })
+            .subscribe(res => {
+
+                if (res.ok) {
+                    let permisos: Permiso[] = res.valores[0];
+                    console.table(permisos.map(p => p.nombre));
+                    this.permissionsService.loadPermissions(permisos.map(p => p.nombre));
+                } else {
+                    this.toastService.Danger("Error interno! Mensaje: " + res.errores[0]);
+                    console.error(res.errores);
+                    this.logout();
+                }
+
+            }, error => {
+                console.error(error);
+                this.logout();
+            });
+    }
+
+
 }

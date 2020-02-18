@@ -32,8 +32,8 @@ export function tokenGetter() {
         JwtModule.forRoot({
             config: {
                 tokenGetter: tokenGetter,
-                whitelistedDomains: [getBaseUrl()],
-                blacklistedRoutes:[getBaseUrl() + '/' + 'api/Authentication']
+                whitelistedDomains: [getHost()],
+                blacklistedRoutes: [getHost() + '/' + 'api/Authentication']
             }
         })
     ],
@@ -49,3 +49,8 @@ export class AppModule { }
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
 }
+
+export function getHost() {
+    return window.location.host;
+}
+

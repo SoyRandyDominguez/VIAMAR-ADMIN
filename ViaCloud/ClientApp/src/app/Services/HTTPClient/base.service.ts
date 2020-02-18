@@ -5,7 +5,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { RequestContenido, RespuestaContenido, Paginacion } from '../../Models/HTTP/RequestResponse';
 
-const helper = new JwtHelperService();
+//const httpOptions = {
+//    headers: new HttpHeaders({
+//        'Authorization': 'Bearer ' + localStorage.getItem('token')
+//    })
+//}
 
 export enum DataApi {
     Usuario = 1,
@@ -82,6 +86,7 @@ export class BaseService {
 
     public DoPostAny<T>(api: DataApi, Method: string, request: any): Observable<RespuestaContenido<T>> {
         return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
+        //return this.http.post<RespuestaContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request, httpOptions);
     }
 
     public GetComboBox<T>(Method: string): Observable<RespuestaContenido<T>> {
