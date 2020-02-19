@@ -3,22 +3,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { AuthGuard } from './Services/Authentication/auth-guard.guard';
-const AllPermissions =
-  [
-    'Admin',
-    'Receptor',
-    'Citas',
-    'RegistrarCita'
-  ]
-
-
 
 const routes: Routes = [
 
 
   {
     path: '', loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule),
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
@@ -29,11 +20,6 @@ const routes: Routes = [
   { path: 'access-denied', loadChildren: () => import('./access-denied/access-denied.module').then(m => m.AccessDeniedModule) },
   { path: 'not-found', loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule) },
   //{ path: '**', redirectTo: 'error404' },
-
-
-
-
-
 
   //{
   //  path: '',

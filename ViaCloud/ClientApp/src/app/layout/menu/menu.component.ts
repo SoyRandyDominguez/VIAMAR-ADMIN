@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserAuthModel } from '../../Models/Auth/user-auth-model';
 import { NgxPermissionsService } from 'ngx-permissions';
 @Component({
   selector: 'app-menu',
@@ -9,7 +8,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 })
 export class MenuComponent implements OnInit {
 
-  currentUser: UserAuthModel;
+  currentUser: any;
   MenuClose: boolean = false;
   
 

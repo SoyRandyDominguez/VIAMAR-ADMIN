@@ -1,5 +1,4 @@
 ﻿using Authentication.Interface;
-using Authentication.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,17 +11,46 @@ using Usuarios.Repository;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Authentication.Repository
 {
     public class AuthenticationRepository : BaseRepository
     {
+        public static string GenerateJwtToken(UsuarioForToken user, int sucursalID)
+        {
+            var claims = new[]
+            {
+                     new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                     new Claim(ClaimTypes.Name,user.UserName),
+                     new Claim(ClaimTypes.Locality,sucursalID.ToString()),
+                     new Claim(ClaimTypes.Role,user.Rol),
+                     new Claim(ClaimTypes.Email, user.Email),
+            };
 
-      
-        //public static ResponseContenido<Usuario> Login(UserForLogin userForLogin)
-        //{
-           
-        //}
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("TOKEN_SECRETO")));
+
+            //var key = new SymmetricSecurityKey(Encoding.UTF8.
+            //    GetBytes(this._config.GetSection("AppSettings:Token").Value));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = creds
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            string tokenClient = tokenHandler.WriteToken(token);
+
+            return tokenClient;
+
+        }
 
         public static bool VerifyPassswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {

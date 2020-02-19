@@ -3,12 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserAuthModel } from '../../Models/Auth/user-auth-model';
 import { DataApi, BaseService } from '../HTTPClient/base.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { UsuarioForLogin } from '../../Models/Usuarios/UsuarioForLogin';
+import { Router } from '@angular/router';
+import { Permiso } from '../../Models/Usuarios/Permiso';
+import { error } from '@angular/compiler/src/util';
+import { ToastService } from '../Common/toast.service';
+import { Usuario } from '../../Models/Usuarios/Usuario';
 
 
 @Injectable({ providedIn: 'root' })
@@ -17,57 +22,76 @@ export class AuthenticationService {
     helper = new JwtHelperService();
     tokenDecoded: any;
 
-
-
-    public currentUserSubject: BehaviorSubject<UserAuthModel>;
-    public currentUser: Observable<UserAuthModel>;
-
-    constructor(public http: HttpClient, public service: BaseService, public permissionsService: NgxPermissionsService) {
-        this.currentUserSubject = new BehaviorSubject<UserAuthModel>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
-    }
-
-    public get currentUserValue(): UserAuthModel {
-        return this.currentUserSubject.value;
+    constructor(public httpService: BaseService,
+        public permissionsService: NgxPermissionsService,
+        private router: Router,
+        private toastService: ToastService,
+    ) {
     }
 
 
-    loggedIn() {
+    loggedIn(): boolean {
         const token = localStorage.getItem("token");
-        return this.helper.isTokenExpired(token);
+        return !this.helper.isTokenExpired(token);
     }
 
-    setDecodeToken() {
+    setDecodeToken(): void {
         let token = localStorage.getItem("token");
         this.tokenDecoded = this.helper.decodeToken(token);
-        console.log(this.tokenDecoded);
     }
 
 
-    login(username: string, password: string) {
+    login(usuario: UsuarioForLogin) {
 
-        return this.service.DoPost<UserAuthModel>(DataApi.AuthUser,
-            "GetUserAuth", { "Username": username, "Clave": password })
-            .pipe(map(res => {
-                // login successful if there's a jwt token in the response  && user.token
-                if (res.ok) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+        return this.httpService.DoPostAny<UsuarioForLogin>(DataApi.Authentication,
+            "Login", usuario)
+            .pipe(
+                map(res => {
+                    // login successful if there's a jwt token in the response  && user.token
+                    if (res.ok) {
+                        // store user details and jwt token in local storage to keep user logged in between page refreshes
 
-                    let Perms = [];
-                    res.records[0].permisos.forEach(x => { Perms.push(x.permisoNombre); });
-                    this.permissionsService.loadPermissions(Perms);
+                        let token = res.valores[0];
+                        localStorage.setItem("token", token);
+                        this.setDecodeToken();
 
-                    res.records[0].permisos = [];
-                    localStorage.setItem('currentUser', JSON.stringify(res.records[0]));
-                    this.currentUserSubject.next(res.records[0]);
-                }
-                return res;
-            }));
+                        let permisos: Permiso[] = res.valores[1];
+                        console.table(permisos.map(p => p.nombre));
+                        this.permissionsService.loadPermissions(permisos.map(p => p.nombre));
+
+                    }
+                    return res;
+                }));
 
     }
 
-    logout() {
+    logout(): void {
         // remove user from local storage to log user out
+        this.permissionsService.flushPermissions();
         localStorage.removeItem('token');
+        this.router.navigateByUrl('/login');
     }
+
+    setPermissions(): void {
+        console.log(Number(this.tokenDecoded.nameid))
+        this.httpService.DoPostAny<any>(DataApi.Usuario, "GetPermisosUsuario", { "Id": Number(this.tokenDecoded.nameid) })
+            .subscribe(res => {
+
+                if (res.ok) {
+                    let permisos: Permiso[] = res.valores[0];
+                    console.table(permisos.map(p => p.nombre));
+                    this.permissionsService.loadPermissions(permisos.map(p => p.nombre));
+                } else {
+                    this.toastService.Danger("Error interno! Mensaje: " + res.errores[0]);
+                    console.error(res.errores);
+                    this.logout();
+                }
+
+            }, error => {
+                console.error(error);
+                this.logout();
+            });
+    }
+
+
 }

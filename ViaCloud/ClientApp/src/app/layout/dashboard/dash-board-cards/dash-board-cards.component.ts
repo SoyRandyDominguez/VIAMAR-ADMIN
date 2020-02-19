@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DashBoardCardsModel } from '../../../Models/SharedComponentsModels/DashBoardCardsModel';
 
 
 @Component({
@@ -11,7 +10,7 @@ export class DashBoardCardsComponent implements OnInit {
 
   constructor() { }
 
-  @Input() items: DashBoardCardsModel[] = [];
+  @Input() items: any[] = [];
 
   ngOnInit() {
     //let item = new DashBoardCardsModel;

@@ -42,7 +42,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ERP.AppLogic\ERP.AppLogic.csproj" />
     <ProjectReference Include="..\ERP.Config\ERP.Config.csproj" />
-    <ProjectReference Include="..\ERP.Models\ERP.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

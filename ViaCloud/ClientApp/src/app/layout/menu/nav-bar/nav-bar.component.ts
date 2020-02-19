@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthenticationService } from '../../../Services/Authentication/autenticacion.service';
-import { Usuarios } from '../../../Models/Usuarios/usuarios';
 import { DataApi, BaseService } from '../../../Services/HTTPClient/base.service';
-import { UserAuthModel } from '../../../Models/Auth/user-auth-model';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,7 +12,7 @@ import { UserAuthModel } from '../../../Models/Auth/user-auth-model';
 export class NavBarComponent implements OnInit {
   
 
-    currentUser: UserAuthModel = null;
+    currentUser: any = null;
     BalanceUsuario: number = 0;
     MostrarBalance: boolean = false;
     MenuClose: boolean = false;
@@ -24,7 +22,7 @@ export class NavBarComponent implements OnInit {
     public  permissionsService: NgxPermissionsService,
      public authenticationService: AuthenticationService
   ) {
-    this.authenticationService.currentUser.subscribe(x => { this.currentUser = x; });
+    //this.authenticationService.currentUser.subscribe(x => { this.currentUser = x; });
    
     }
 

@@ -32,7 +32,7 @@ export class PermisosTreeViewComponent implements OnInit {
 
     getPermisos() {
         this.Cargando = true;
-        this.base.DoPost<PermisosTreeView>(DataApi.PermisosUsuario, "GetPermisosByUsuarioID", { "@UsuarioID": this.UsuarioID }).subscribe(x => {
+        this.base.DoPost<PermisosTreeView>(DataApi.Usuario, "GetPermisosByUsuarioID", { "@UsuarioID": this.UsuarioID }).subscribe(x => {
             let permisos: object[] = [];
 
             x.records.forEach(z => {
