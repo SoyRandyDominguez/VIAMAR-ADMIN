@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Usuarios } from '../../../Models/Usuarios/usuarios';
-import { UserAuthModel } from '../../../Models/Auth/user-auth-model';
 import { BaseService, DataApi } from '../../../Services/HTTPClient/base.service';
 import { LibrariesService } from '../../../Services/Common/libraries-service.service';
+import { Usuario } from '../../../Models/Usuarios/Usuario';
 
 @Component({
     selector: 'app-usuario-codigo-seguridad',
@@ -12,7 +11,7 @@ import { LibrariesService } from '../../../Services/Common/libraries-service.ser
 })
 export class UsuarioCodigoSeguridadComponent implements OnInit {
 
-     currentUser: UserAuthModel;
+     //currentUser: UserAuthModel;
      usuarioID: number;
     @Input()  usuarioNombreCompleto: string;
     @Input()  CorreoNotificadoCambioClave: string;
@@ -30,8 +29,8 @@ export class UsuarioCodigoSeguridadComponent implements OnInit {
 
     ngOnInit() {
         this.CreateForm();
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.usuarioID = this.currentUser.id;
+        //this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        //this.usuarioID = this.currentUser.id;
     }
 
      onSubmit() {
@@ -59,7 +58,7 @@ export class UsuarioCodigoSeguridadComponent implements OnInit {
             "codigoSeguridadMAR": this.f.codigoSeguridadMAR.value
         };
 
-        this.base.DoPost<Usuarios>(DataApi.MUsuario, "ValidarCodigoConfirmacion", parametros).subscribe(x => {
+        this.base.DoPost<Usuario>(DataApi.Usuario, "ValidarCodigoConfirmacion", parametros).subscribe(x => {
 
             this.btnConfirmarCargando = false;
             this.codigoValidado.emit(x.ok);
@@ -72,11 +71,11 @@ export class UsuarioCodigoSeguridadComponent implements OnInit {
     public EnviarCodigoSeguridadMAR() {
         this.btnReenviarCargando = true;
         let parametros = {
-            "UsuarioIDLogueado": this.currentUser.id,
-            "CorreoRecibidorCodigo": this.currentUser.email,
+            //"UsuarioIDLogueado": this.currentUser.id,
+            //"CorreoRecibidorCodigo": this.currentUser.email,
         };
 
-        this.base.DoPost<Usuarios>(DataApi.MUsuario, "EnviarCorreoConfirmacion", parametros).subscribe(x => {
+        this.base.DoPost<Usuario>(DataApi.Usuario, "EnviarCorreoConfirmacion", parametros).subscribe(x => {
             if (!x.ok) {
                 this.MostrarMensajeDeErrorInterno(x.errores[0]);
             } else {
@@ -102,13 +101,13 @@ export class UsuarioCodigoSeguridadComponent implements OnInit {
     }
 
      MostrarMensajeDeErrorInterno(error: string) {
-        this.library.showToast(error, { classname: 'bg-danger text-light', icon: "fas fa-exclamation-triangle" });
+        //this.library.showToast(error, { classname: 'bg-danger text-light', icon: "fas fa-exclamation-triangle" });
     }
      MostrarMensajeDeErrorConexionServidor() {
-        this.library.showToast("Error al conectar con el servidor", { classname: 'bg-danger text-light', icon: "fas fa-exclamation-triangle" });
+        //this.library.showToast("Error al conectar con el servidor", { classname: 'bg-danger text-light', icon: "fas fa-exclamation-triangle" });
     }
      MostrarMensajeOperacionRealizada(mensaje: string = "Operación realizada.") {
-        this.library.showToast(mensaje, { classname: 'bg-success text-white ', icon: "fas fa-check-square" });
+        //this.library.showToast(mensaje, { classname: 'bg-success text-white ', icon: "fas fa-check-square" });
     }
 
 }
