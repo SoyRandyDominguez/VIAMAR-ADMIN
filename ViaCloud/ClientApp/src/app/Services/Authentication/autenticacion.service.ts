@@ -69,7 +69,7 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         this.permissionsService.flushPermissions();
         localStorage.removeItem('token');
-        this.router.navigateByUrl('/login');
+        window.location.reload();
     }
 
     setPermissions(): void {
