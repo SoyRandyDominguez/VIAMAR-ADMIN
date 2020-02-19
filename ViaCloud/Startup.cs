@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Public.DataAccess;
+using System;
 using System.Text;
 
 namespace ViaCloud
@@ -42,7 +43,7 @@ namespace ViaCloud
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                                         .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                                         .GetBytes(Environment.GetEnvironmentVariable("TOKEN_SECRETO"))),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                 };
