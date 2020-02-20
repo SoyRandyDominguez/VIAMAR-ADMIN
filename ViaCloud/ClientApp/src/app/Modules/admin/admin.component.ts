@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HeaderComponent } from 'src/app/core/sharedComponents/header/header.component';
-import { LeftAsideComponent } from 'src/app/core/sharedComponents/left-aside/left-aside.component';
+import { HeaderComponent } from '../../shared/component/header/header.component';
 
 @Component({
   selector: 'app-admin',
