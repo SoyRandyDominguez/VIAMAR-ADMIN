@@ -10,12 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { JwtModule } from '@auth0/angular-jwt';
-
-
-export function tokenGetter() {
-    return localStorage.getItem("token");
-}
-
+ 
 @NgModule({
 
     declarations: [
@@ -54,3 +49,6 @@ export function getHost() {
     return window.location.host;
 }
 
+export function tokenGetter() {
+    return localStorage.getItem("token");
+}
