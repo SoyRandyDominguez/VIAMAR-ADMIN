@@ -1,0 +1,61 @@
+// Green colors
+.skin-blue {
+    /*Theme Colors*/
+    $themecolor: #009efb;
+    $themecolor-dark: #028ee1;
+    $topbar: #009efb;
+    $footer: #009efb;
+    // Topbar
+    .topbar {
+        background: $topbar;
+        background: -moz-linear-gradient(left, #0178bc 0%, #00bdda 100%);
+        background: -webkit-linear-gradient(left, #0178bc 0%, #00bdda 100%);
+        background: linear-gradient(to right, #0178bc 0%, #00bdda 100%);
+    }
+    .topbar{
+        .top-navbar .navbar-header .navbar-brand .dark-logo {
+            display: none;
+        }
+        .top-navbar .navbar-header .navbar-brand .light-logo {
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+    //Sidebar
+    .sidebar-nav {
+        ul li a {
+            &.active,
+            &:hover {
+                color: $themecolor;
+                i {
+                    color: $themecolor;
+                }
+            }
+        }
+        > ul > li {
+            &.selected > a {
+                color: $themecolor;
+                border-left: 3px solid $themecolor;
+                i {
+                    color: $themecolor;
+                }
+            }
+        }
+    }
+    
+    footer{
+        color:   white;
+        background: $footer;
+        background: -moz-linear-gradient(left, #01c0c8 0%, #1f72a2 100%);
+        /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, #01c0c8 0%, #1f72a2 100%);
+        /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, #01c0c8 0%, #1f72a2 100%);
+        /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    }
+    
+    //Bread-crumb
+    .page-titles .breadcrumb .breadcrumb-item.active{
+        color: $themecolor;
+    }
+}
