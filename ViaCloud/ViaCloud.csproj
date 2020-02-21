@@ -31,14 +31,44 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\core\authentication\guard\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\core\authentication\guard\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\core\authentication\guard\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\core\authentication\guard\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\core\authentication\model\Permiso.ts" />
+    <None Remove="ClientApp\src\app\core\http\model\Paginacion.ts" />
+    <None Remove="ClientApp\src\app\core\http\model\RequestContenido.ts" />
+    <None Remove="ClientApp\src\app\core\http\model\ResponseContenido.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Authentication\Authentication.csproj" />
     <ProjectReference Include="..\Public\Public.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\core\authentication\service\" />
+    <Folder Include="ClientApp\src\app\core\http\service\" />
+    <Folder Include="ClientApp\src\app\Modules\servicios\citas\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\core\authentication\model\Permiso.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\http\model\ResponseContenido.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\core\http\model\RequestContenido.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\core\http\model\Paginacion.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
