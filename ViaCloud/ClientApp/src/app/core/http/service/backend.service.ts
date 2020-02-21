@@ -1,22 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ResponseContenido } from '../model/ResponseContenido';
 import { RequestContenido } from '../model/RequestContenido';
+import { ResponseContenido } from '../model/ResponseContenido';
+import { Observable } from 'rxjs';
 import { Paginacion } from '../model/Paginacion';
-
-export enum DataApi {
-    Usuario = 1,
-    Authentication = 2,
-    ComboBox = 3,
-}
+import { DataApi } from '../../../shared/enums/DataApi.enum';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class BackendService {
-
 
     dataApiRootMap: { [api: string]: string } = {
         "1": "api/Usuario",
@@ -31,6 +25,8 @@ export class BackendService {
         this.http = _http;
         this.baseUrl = _baseUrl;
     }
+
+
 
     public GetOne<T>(api: DataApi, Method: string, id: number): Observable<ResponseContenido<T>> {
         let request = new RequestContenido<T>();
@@ -94,5 +90,6 @@ export class BackendService {
         request.parametros = parametros;
         return this.http.post<T>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
     }
+
 
 }

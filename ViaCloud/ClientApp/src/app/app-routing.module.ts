@@ -1,19 +1,39 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthguardGuard } from './core/authentication/guard/authguard.guard';
 
+import { FullComponent } from './core/layouts/full/full.component';
+import { LoginComponent } from './Modules/login/login.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
-const routes: Routes = [
+export const Approutes: Routes = [
     {
-        path: '', loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule), data: { breadcrumb: 'Home' },
-        canActivate: [AuthguardGuard]
-    }, 
+        path: '',
+        component: FullComponent,
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        children: [
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            {
+                path: 'home', loadChildren: () => import('./Modules/home/home.module').then(m => m.HomeModule),
+            },
+            {
+                path: 'citas', loadChildren: () => import('./Modules/citas/citas.module').then(m => m.CitasModule),
+            },
+            
+        ],
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    //{
+    //    path: '**',
+    //    redirectTo: '/login'
+    //},
 
-    { path: 'login', loadChildren: () => import('./Modules/login/login.module').then(m => m.LoginModule) },
-    //{ path: '**', redirectTo: 'error404' },
 ];
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(Approutes)],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

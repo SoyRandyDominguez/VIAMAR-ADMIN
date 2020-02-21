@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
+import { BackendService } from '../../http/service/backend.service';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { BackendService, DataApi } from '../../http/service/backend.service';
-import { UsuarioForLogin } from '../model/UsuarioForLogin';
-import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { DataApi } from '../../../shared/enums/DataApi.enum';
 import { Permiso } from '../model/Permiso';
+import { UsuarioForLogin } from '../../../Modules/login/model/UsuarioForLogin.model';
+import { map } from 'rxjs/operators';
+
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
+
 
     helper = new JwtHelperService();
     tokenDecoded: any;
@@ -47,9 +50,9 @@ export class AuthenticationService {
                         let token = res.valores[0];
                         localStorage.setItem("token", token);
                         this.setDecodeToken();
-                        console.log(this.tokenDecoded)
+                        //console.log(this.tokenDecoded)
                         let permisos: Permiso[] = res.valores[1];
-                        console.table(permisos.map(p => p.nombre));
+                        //console.table(permisos.map(p => p.nombre));
                         this.permissionsService.loadPermissions(permisos.map(p => p.nombre));
 
                     }
@@ -58,16 +61,14 @@ export class AuthenticationService {
 
     }
 
-
     logout(): void {
         // remove user from local storage to log user out
-        //this.permissionsService.flushPermissions();
+        this.permissionsService.flushPermissions();
         localStorage.removeItem('token');
         window.location.reload();
     }
 
     setPermissions(): void {
-        console.log(Number(this.tokenDecoded.nameid))
         this.httpService.DoPostAny<any>(DataApi.Usuario, "GetPermisosUsuario", { "Id": Number(this.tokenDecoded.nameid) })
             .subscribe(res => {
 
