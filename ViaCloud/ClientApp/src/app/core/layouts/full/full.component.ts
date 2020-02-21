@@ -34,7 +34,7 @@ export class FullComponent implements OnInit {
     boxed: 'full', // two possible values: full, boxed
     navbarbg: 'skin4', // six possible values: skin(1/2/3/4/5/6)
     sidebarbg: 'skin6', // six possible values: skin(1/2/3/4/5/6)
-    logobg: 'skin6' // six possible values: skin(1/2/3/4/5/6)
+    logobg: 'skin4' // six possible values: skin(1/2/3/4/5/6)
   };
 
   Logo() {

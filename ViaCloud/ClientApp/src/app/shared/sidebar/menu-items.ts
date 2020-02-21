@@ -39,7 +39,7 @@ export const ROUTES: RouteInfo[] = [
         extralink: false,
         submenu: [
             {
-                path: '/citas',
+                path: '/servicios/citas',
                 label: '',
                 labelClass: '',
                 title: 'Citas',

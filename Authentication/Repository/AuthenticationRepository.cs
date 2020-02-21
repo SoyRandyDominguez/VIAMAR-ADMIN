@@ -24,6 +24,7 @@ namespace Authentication.Repository
                      new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                      new Claim(ClaimTypes.Name,user.UserName),
                      new Claim(ClaimTypes.Locality,sucursalID.ToString()),
+                     new Claim(ClaimTypes.GivenName,user.Nombres + " " + user.Apellidos) ,
                      new Claim(ClaimTypes.Role,user.Rol),
                      new Claim(ClaimTypes.Email, user.Email),
             };

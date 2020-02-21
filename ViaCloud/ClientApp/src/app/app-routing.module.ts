@@ -17,9 +17,10 @@ export const Approutes: Routes = [
                 path: 'home', loadChildren: () => import('./Modules/home/home.module').then(m => m.HomeModule),
             },
             {
-                path: 'citas', loadChildren: () => import('./Modules/citas/citas.module').then(m => m.CitasModule),
+                path: 'servicios', loadChildren: () => import('./Modules/servicios/servicios.module').then(m => m.ServiciosModule)
             },
-            
+
+
         ],
     },
     {

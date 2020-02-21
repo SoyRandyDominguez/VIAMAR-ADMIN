@@ -55,7 +55,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\core\authentication\service\" />
     <Folder Include="ClientApp\src\app\core\http\service\" />
-    <Folder Include="ClientApp\src\app\Modules\servicios\" />
+    <Folder Include="ClientApp\src\app\Modules\servicios\citas\" />
   </ItemGroup>
 
   <ItemGroup>

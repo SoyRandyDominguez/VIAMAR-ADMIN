@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+ 
 import { FullComponent } from './core/layouts/full/full.component';
 import { BlankComponent } from './core/layouts/blank/blank.component';
 
@@ -25,7 +25,7 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './Modules/login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar'; 
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 

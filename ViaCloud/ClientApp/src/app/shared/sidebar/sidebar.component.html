@@ -1,7 +1,7 @@
 <nav class="sidebar-nav">
     <ul id="sidebarnav">
         <!-- User Profile-->
-        <li class="sidebar-item user-profile" [class.active]="showMenu === 'user'">
+        <!--<li class="sidebar-item user-profile" [class.active]="showMenu === 'user'">
           <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" (click)="addExpandClass('user')" aria-expanded="false"><span><img src="assets/images/users/profile.png" alt="user" /></span><span class="hide-menu">Steave Jobs </span></a>
           <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'user'">
             <li><a href="javascript:void()" class="sidebar-link p-0">My Profile </a></li>
@@ -10,7 +10,7 @@
             <li><a href="javascript:void()" class="sidebar-link p-0">Account Setting</a></li>
             <li><a href="javascript:void()" class="sidebar-link p-0">Logout</a></li>
           </ul>  
-        </li>
+        </li>-->
         <!-- First level menu -->
         <li class="sidebar-item" [class.active]="showMenu === sidebarnavItem.title" *ngFor="let sidebarnavItem of sidebarnavItems"
             [routerLinkActive]="sidebarnavItem.submenu.length != 0 ? '' : 'active'">
