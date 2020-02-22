@@ -13,7 +13,7 @@ const routes: Routes = [
     {
         path: '',
         data: {
-            title: 'Home Page',
+            title: 'ViaCloud | Home Page',
             urls: [
                 { title: 'Home'}
             ]

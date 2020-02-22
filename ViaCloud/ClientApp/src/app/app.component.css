@@ -8,7 +8,7 @@
 }
 
 .progress-line {
-  background-color: red;
+  background-color: #398bf7;
   display: -webkit-flex;
   display: flex;
 }

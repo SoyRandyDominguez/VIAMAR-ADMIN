@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CitaListadoComponent } from './citas/cita-listado/cita-listado.component';
+import { CitaFormularioComponent } from './citas/cita-formulario/cita-formulario.component';
 
 
 const routes: Routes = [
@@ -8,14 +9,25 @@ const routes: Routes = [
     {
         path: 'citas',
         data: {
-            title: 'Citas Page',
+            title: 'ViaCloud | Citas',
             urls: [
                 { title: 'Servicios', url: "/servicios" },
                 { title: 'Citas' }
             ]
         },
         component: CitaListadoComponent,
-    }
+    },
+    {
+        path: 'citas/:id',
+        data: {
+            title: 'ViaCloud | Citas Formulario',
+            urls: [
+                { title: 'Servicios', url: "/servicios" },
+                { title: 'Citas Formulario' }
+            ]
+        },
+        component: CitaFormularioComponent,
+    },
 ];
 
 @NgModule({
