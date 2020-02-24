@@ -12,7 +12,7 @@ namespace Public.DataAccess.Repository
 
         public static List<ComboBox> GetSucursalesUsuario(int usuarioID)
         {
-            var resultados = Query<ComboBox>(ComboBoxQuery.selectSucursalesUsuario, new { usuarioID });
+            var resultados = QueryObject<ComboBox>(ComboBoxQuery.selectSucursalesUsuario, new { usuarioID });
             return resultados;
         }
 

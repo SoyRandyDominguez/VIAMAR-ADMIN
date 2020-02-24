@@ -50,7 +50,7 @@ namespace Public
         {
             try
             {
-                var resultados = Query<int>(@" 
+                var resultados = QueryObject<int>(@" 
                     declare @Destino varchar(100) = (select email from MUsuarios where usuarioid=@UsuarioID)
                     DECLAre @return_value int 
                     EXEC @return_value = [dbo].EnviarEmailCodigoSeguridad @Codigo ,@Destino 
@@ -70,7 +70,7 @@ namespace Public
         {
             try
             {
-                var resultados = Query<int>(@" 
+                var resultados = QueryObject<int>(@" 
                     DECLAre @return_value int 
                      EXEC	@return_value = [dbo].[EnviarEmailCambioDeClaveNotificacion] @UsuarioID , @Destino , @NombreCompletoUsuarioCambioClave 
                     SELECT	'retorno' = @return_value ",
@@ -104,7 +104,7 @@ namespace Public
         {
             try
             {
-                List<string> resultados = Query<string>("select top 1 CodigoSeguridad from MUsuariosCodigoSeguridad where CodigoSeguridad = @codigo and UsuarioID = @usuarioid and Confirmado = 0 " +
+                List<string> resultados = QueryObject<string>("select top 1 CodigoSeguridad from MUsuariosCodigoSeguridad where CodigoSeguridad = @codigo and UsuarioID = @usuarioid and Confirmado = 0 " +
                     "and fecha = convert(date,getdate()) order by ID desc  ", new { codigo, usuarioid });
 
                 return resultados.Any() ? true : false;

@@ -43,13 +43,16 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\core\authentication\model\Permiso.ts" />
     <None Remove="ClientApp\src\app\core\http\model\Paginacion.ts" />
+    <None Remove="ClientApp\src\app\core\http\model\Parametro.ts" />
     <None Remove="ClientApp\src\app\core\http\model\RequestContenido.ts" />
     <None Remove="ClientApp\src\app\core\http\model\ResponseContenido.ts" />
+    <None Remove="ClientApp\src\app\Modules\servicios\model\CitaForList.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Authentication\Authentication.csproj" />
     <ProjectReference Include="..\Public\Public.csproj" />
+    <ProjectReference Include="..\Servicios\Servicios.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +63,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\core\authentication\model\Permiso.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\http\model\Parametro.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\core\http\model\ResponseContenido.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -69,6 +75,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\core\http\model\Paginacion.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\Modules\servicios\model\CitaForList.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

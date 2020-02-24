@@ -4,7 +4,7 @@ import { RequestContenido } from '../model/RequestContenido';
 import { ResponseContenido } from '../model/ResponseContenido';
 import { Observable } from 'rxjs';
 import { Paginacion } from '../model/Paginacion';
-import { DataApi } from '../../../shared/enums/DataApi.enum';
+import { DataApi, dataApiRootMap } from '../../../shared/enums/DataApi.enum';
 
 
 @Injectable({
@@ -12,11 +12,6 @@ import { DataApi } from '../../../shared/enums/DataApi.enum';
 })
 export class BackendService {
 
-    dataApiRootMap: { [api: string]: string } = {
-        "1": "api/Usuario",
-        "2": "api/Authentication",
-        "3": "api/ComboBox",
-    };
 
     http: HttpClient;
     baseUrl: string;
@@ -32,7 +27,7 @@ export class BackendService {
         let request = new RequestContenido<T>();
         request.parametros = { '@Id': id };
         return this.http
-            .post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
+            .post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request);
 
     }
 
@@ -40,7 +35,7 @@ export class BackendService {
         let request = new RequestContenido<T>();
         request.parametros = parametros;
         return this.http
-            .post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request)
+            .post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request)
     }
 
     public GetAllWithPagination<T>(api: DataApi, Method: string, Columna: string, PaginaNo: number = 1, PaginaSize: number = 10, OrderASC: boolean = true, parametros: any = {}): Observable<ResponseContenido<T>> {
@@ -51,13 +46,14 @@ export class BackendService {
         request.pagina.paginaSize = PaginaSize;
         request.pagina.ordenAsc = OrderASC;
         request.pagina.ordenColumna = Columna;
-        return this.http.post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
+        console.log(request)
+        return this.http.post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request);
     }
 
     public DoPost<T>(api: DataApi, Method: string, parametros: any): Observable<ResponseContenido<T>> {
         let request = new RequestContenido<T>();
         request.parametros = parametros;
-        return this.http.post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
+        return this.http.post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request);
     }
 
 
@@ -65,30 +61,30 @@ export class BackendService {
         let request = new RequestContenido<T>();
         request.parametros = parametros;
         request.records = records;
-        return this.http.post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
+        return this.http.post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request);
     }
 
     public async DoPostPromise<T>(api: DataApi, Method: string, parametros: any) {
         let request = new RequestContenido<T>();
         request.parametros = parametros;
-        return await this.http.post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request).toPromise();
+        return await this.http.post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request).toPromise();
     }
 
     public DoPostAny<T>(api: DataApi, Method: string, request: any): Observable<ResponseContenido<T>> {
-        return this.http.post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
+        return this.http.post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request);
         //return this.http.post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request, httpOptions);
     }
 
     public GetComboBox<T>(Method: string): Observable<ResponseContenido<T>> {
         let request = new RequestContenido<T>();
         return this.http
-            .post<ResponseContenido<T>>(this.baseUrl + this.dataApiRootMap[DataApi.ComboBox] + "/" + Method, request)
+            .post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[DataApi.ComboBox] + "/" + Method, request)
     }
 
     public DoPostResponseClass<T>(api: DataApi, Method: string, parametros: any): Observable<T> {
         let request = new RequestContenido<T>();
         request.parametros = parametros;
-        return this.http.post<T>(this.baseUrl + this.dataApiRootMap[api] + "/" + Method, request);
+        return this.http.post<T>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request);
     }
 
 

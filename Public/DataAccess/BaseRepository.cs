@@ -15,8 +15,34 @@ namespace Public.DataAccess
 {
     public abstract class BaseRepository
     {
-        static SqlConnection _cn = null;
+        private static SqlConnection _cn = null;
 
+        private static void OpenConnection()
+        {
+            if (_cn != null)
+            {
+                if (_cn.State == System.Data.ConnectionState.Open)
+                {
+                    return;
+                }
+                else
+                {
+                    _cn.Close();
+                    _cn.Dispose();
+                    _cn = null;
+                }
+            }
+
+            _cn = DALHelper.DALHelper.GetSqlConnection();// new SqlConnection(@"data source=(local);initial catalog=MARCentral;persist security info=True;MultipleActiveResultSets=true;Min Pool Size=10;user id=sa;pwd=st0rpk0qt0z");
+            try
+            {
+                _cn.Open();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Falló la conexión al servidor.", ex);
+            }
+        }
 
         protected static T ExecuteScalar<T>(string sentencia, object parametros = null)
         {
@@ -26,6 +52,7 @@ namespace Public.DataAccess
             if (parametros != null) paramList.AddDynamicParams(parametros);
             return (_cn.ExecuteScalar<T>(sentencia, paramList));
         }
+
 
         protected static void ExecuteScalarList(string sentencia, List<object> parametros = null)
         {
@@ -38,12 +65,21 @@ namespace Public.DataAccess
 
 
 
-        protected static List<T> Query<T>(string sentencia, object parametros = null)
+        protected static List<T> Query<T>(string sentencia, List<Parametro> parametros = null)
         {
             OpenConnection();
             if (sentencia == null) return default(List<T>);
             var paramList = new DynamicParameters();
-            if (parametros != null) paramList.AddDynamicParams(parametros);
+            if (parametros != null)
+            {
+                var dc = new Dictionary<string, object>();
+                parametros.ForEach(p =>
+                {
+                    dc.Add(p.Key, p.Value.ToString());
+                });
+                object paramsBD = dc;
+                paramList.AddDynamicParams(paramsBD);
+            };
             return (_cn.Query<T>(sentencia, paramList)).ToList();
         }
 
@@ -65,8 +101,17 @@ namespace Public.DataAccess
             return (_cn.Query<T>(StoredPName, paramList, commandType: CommandType.StoredProcedure)).ToList();
 
         }
+        protected static List<T> QueryObject<T>(string query, object parametros = null)
+        {
+            OpenConnection();
+            if (query == null) return default(List<T>);
+            var paramList = new DynamicParameters();
+            if (parametros != null) paramList.AddDynamicParams(parametros);
+            return (_cn.Query<T>(query, paramList, commandType: CommandType.Text)).ToList();
 
-        protected static ListadoRecords<T> QueryConPaginacion<T>(string sentencia, object parametros = null, Paginacion pagina = null) where T : BaseDataRecord
+        }
+
+        protected static ListadoRecords<T> QueryConPaginacion<T>(string sentencia, List<Parametro> parametros = null, Paginacion pagina = null) where T : BaseDataRecord
         {
             try
             {
@@ -76,18 +121,32 @@ namespace Public.DataAccess
                 sentencia = Regex.Replace(sentencia, @"^\s+$[\r\n]*", "", RegexOptions.Multiline).Trim().ToUpper().Replace(";", ""); //Eliminar lineas en blanco
                 var results = new ListadoRecords<T>();
 
-                var combinedParams = new DynamicParameters();
+                //var combinedParams = new DynamicParameters();
+                //if (parametros != null)
+                //{
+                //    combinedParams.AddDynamicParams(parametros);
+                //}
+
+                var paramList = new DynamicParameters();
                 if (parametros != null)
                 {
-                    combinedParams.AddDynamicParams(parametros);
-                }
+                    var dc = new Dictionary<string, object>();
+                    parametros.ForEach(p =>
+                    {
+                        dc.Add(p.Key, p.Value.ToString());
+                    });
+                    object paramsBD = dc;
+                    paramList.AddDynamicParams(paramsBD);
+                };
+
+
                 if (pagina != null && pagina.PaginaSize > 0 && pagina.PaginaNo > 0 && pagina.OrdenColumna != null
-                    && pagina.OrdenColumna.Trim().Length > 0)
+                    && pagina.OrdenColumna.Trim().Length > 0 && sentencia.StartsWith("SELECT"))
                 {
                     pagina.OrdenColumna = Regex.Replace(pagina.OrdenColumna, @"^\s+$[\r\n]*", "", RegexOptions.Multiline)
                                                         .Trim().Replace("--", "").Replace(";", "")
                                                         .Replace("'", ""); // Eliminar lineas y caracteres peligrosos
-                    combinedParams.AddDynamicParams(pagina);
+                    paramList.AddDynamicParams(pagina);
                     var sentenciaRowNumber = string.Format(@"SELECT ROW_NUMBER() OVER ( ORDER BY [{1}] {2}) AS RecordNo,{0}",
                                                            sentencia.Substring(6), pagina.OrdenColumna, pagina.OrdenAsc ? "ASC" : "DESC");
                     sentenciaFinal = string.Format(@"
@@ -125,7 +184,7 @@ namespace Public.DataAccess
 
                 }
 
-                var gReader = _cn.QueryMultiple(sentenciaFinal, combinedParams);
+                var gReader = _cn.QueryMultiple(sentenciaFinal, paramList);
                 results.Records = gReader.Read<T>().ToList();
                 if (!gReader.IsConsumed)
                 {
@@ -161,54 +220,6 @@ namespace Public.DataAccess
 
 
             QueryStoredProcedure<object>("Hac_Hacienda_Guardar_Log", new { LogTipo = pLogTipo, LogComentario = pLogComentario, UsuarioID = pUsuarioID, SecRemoteIP = pSecRemoteIP, BancaID = pBancaID });
-        }
-
-        static void OpenConnection()
-        {
-            if (_cn != null)
-            {
-                if (_cn.State == System.Data.ConnectionState.Open)
-                {
-                    return;
-                }
-                else
-                {
-                    _cn.Close();
-                    _cn.Dispose();
-                    _cn = null;
-                }
-            }
-
-            _cn = DALHelper.DALHelper.GetSqlConnection();// new SqlConnection(@"data source=(local);initial catalog=MARCentral;persist security info=True;MultipleActiveResultSets=true;Min Pool Size=10;user id=sa;pwd=st0rpk0qt0z");
-            try
-            {
-                _cn.Open();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Fallo la conexion a la base de datos.", ex);
-            }
-        }
-
-        protected static SqlDataRecord toDobleIdSqlDataRecord(int? Id1, int? Id2)
-        {
-            var result = new SqlDataRecord(new SqlMetaData[] {
-                new SqlMetaData("Id1", SqlDbType.Int),
-                new SqlMetaData("Id2", SqlDbType.Int),
-            });
-
-            if (Id1.HasValue)
-                result.SetInt32(0, Id1.Value);
-            else
-                result.SetDBNull(0);
-
-
-            if (Id2.HasValue)
-                result.SetInt32(1, Id2.Value);
-            else
-                result.SetDBNull(1);
-
-            return result;
         }
 
     }

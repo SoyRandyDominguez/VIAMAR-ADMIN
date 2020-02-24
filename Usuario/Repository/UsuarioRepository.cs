@@ -39,19 +39,19 @@ namespace Usuarios.Repository
 
         public static Usuario GetUsuario(string userName)
         {
-            var resultados = Query<Usuario>(UsuarioQuery.selectUsuario_ByUserName, new { userName });
+            var resultados = QueryObject<Usuario>(UsuarioQuery.selectUsuario_ByUserName, new { userName });
             return resultados.Count > 0 ? resultados[0] : null;
         }
 
         public static UsuarioForToken GetUsuarioForToken(string userName)
         {
-            var resultados = Query<UsuarioForToken>(UsuarioQuery.selectUsuarioForToken, new { userName });
+            var resultados = QueryObject<UsuarioForToken>(UsuarioQuery.selectUsuarioForToken, new { userName });
             return resultados.Count > 0 ? resultados[0] : null;
         }
 
         public static List<Permiso> GetPermisos(int usuarioID)
         {
-            var resultados = Query<Permiso>(UsuarioQuery.selectUsuarioPermisos, new { usuarioID });
+            var resultados = QueryObject<Permiso>(UsuarioQuery.selectUsuarioPermisos, new { usuarioID });
             return resultados.Count > 0 ? resultados : null;
         }
 

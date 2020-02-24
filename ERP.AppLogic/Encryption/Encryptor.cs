@@ -128,10 +128,6 @@ namespace ERP.AppLogic.Encryption
                 theKey = (DateTime.Today.DayOfYear.ToString() + theKey);
                 var TheEncData = Convert.FromBase64String(TheData);
 
-
-
-
-
                 return Encoding.UTF8.GetString(EncEngine.Decrypt(TheEncData, theKey));
             }
             catch (Exception ex)

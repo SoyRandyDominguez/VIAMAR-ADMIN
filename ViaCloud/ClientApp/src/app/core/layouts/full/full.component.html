@@ -106,7 +106,7 @@
   <!-- ============================================================== -->
   <!-- End Page wrapper  -->
   <!-- ============================================================== -->
-  <aside class="customizer" [ngClass]="{'show-service-panel': showSettings}">
+  <aside class="customizer" [ngClass]="{'show-service-panel': showSettings}" *ngIf="mostrarComponenteSettings">
     <a href="javascript:void(0)" class="btn-dark btn btn-circle btn-lg service-panel-toggle" (click)="showSettings = !showSettings">
       <i class="fa fa-spin fa-cog"></i>
     </a>
