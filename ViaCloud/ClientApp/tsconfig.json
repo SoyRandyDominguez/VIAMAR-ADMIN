@@ -11,6 +11,9 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
+    "allowSyntheticDefaultImports": true,
+    // "strictFunctionTypes": true,
+    // "noImplicitReturns": true,
     "typeRoots": [
       "node_modules/@types"
     ],

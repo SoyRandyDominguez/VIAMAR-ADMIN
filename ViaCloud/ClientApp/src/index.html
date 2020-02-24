@@ -1,70 +1,119 @@
-<!--<!doctype html>
+<!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>MARAdmin</title>
+  <title>Vex - Angular 8+ Material Design Admin Template</title>
   <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="favicon.ico" rel="icon" type="image/x-icon">
+  
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
 </head>
 
+<body dir="ltr">
+  <style>
+    #vex-splash-screen {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #13293d;
+      z-index: 99999;
+      pointer-events: none;
+    }
 
-<body>
+    #vex-splash-screen>.wrapper {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
 
-  <app-root>Loading...</app-root>
+    @-webkit-keyframes ball-scale-multiple {
+      0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 0;
+      }
 
-</body>
-</html>-->
+      5% {
+        opacity: 1;
+      }
 
+      100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
+    @keyframes ball-scale-multiple {
+      0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 0;
+      }
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>ViaCloud - Admin</title>
-  <base href="/">
+      5% {
+        opacity: 1;
+      }
 
-  <!-- Custom fonts for this template-->
-  <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+      100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
 
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    .ball-scale-multiple {
+      position: relative;
+      -webkit-transform: translateY(-30px);
+      transform: translateY(-30px);
+    }
 
-  <!-- Custom styles for this template-->
-  <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
-  <link rel="shortcut icon" href="assets/images/fav.jpg">
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/fontawsom-all.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
-</head>
+    .ball-scale-multiple>div:nth-child(2) {
+      -webkit-animation-delay: -0.4s;
+      animation-delay: -0.4s;
+    }
 
-<body id="page-top">
+    .ball-scale-multiple>div:nth-child(3) {
+      -webkit-animation-delay: -0.2s;
+      animation-delay: -0.2s;
+    }
 
+    .ball-scale-multiple>div {
+      background-color: #fff;
+      border-radius: 100%;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      position: absolute;
+      left: -30px;
+      top: 0;
+      opacity: 0;
+      margin: 0;
+      width: 60px;
+      height: 60px;
+      -webkit-animation: ball-scale-multiple 1s 0s linear infinite;
+      animation: ball-scale-multiple 1s 0s linear infinite;
+    }
+  </style>
 
-  <app-root>Loading...</app-root>
+  <div id="vex-splash-screen">
+    <div class="wrapper">
+      <div class="ball-scale-multiple">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="assets/js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <!--<script src="assets/vendor/chart.js/Chart.min.js"></script>-->
-  <!-- Page level custom scripts -->
-  <!--<script src="assets/js/demo/chart-area-demo.js"></script>-->
-  <!--<script src="assets/js/demo/chart-pie-demo.js"></script>-->
+  <vex-root></vex-root>
 </body>
 
 </html>
