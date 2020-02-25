@@ -46,7 +46,9 @@
     <None Remove="ClientApp\src\app\core\http\model\Parametro.ts" />
     <None Remove="ClientApp\src\app\core\http\model\RequestContenido.ts" />
     <None Remove="ClientApp\src\app\core\http\model\ResponseContenido.ts" />
+    <None Remove="ClientApp\src\app\Modules\servicios\model\Cita.ts" />
     <None Remove="ClientApp\src\app\Modules\servicios\model\CitaForList.ts" />
+    <None Remove="ClientApp\src\app\Modules\servicios\model\SintomaViewModel.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,6 +75,12 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\core\http\model\Paginacion.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\Modules\servicios\model\Cita.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\Modules\servicios\model\SintomaViewModel.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\Modules\servicios\model\CitaForList.ts" />

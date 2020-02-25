@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Public.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Servicios.Model
 {
-    public class Cita
+    public class Cita : BaseDataRecord
     {
         public int Id { get; set; }
         public int CitaTipoID { get; set; }

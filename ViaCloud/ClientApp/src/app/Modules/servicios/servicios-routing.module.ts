@@ -23,6 +23,7 @@ const routes: Routes = [
             title: 'ViaCloud | Citas Formulario',
             urls: [
                 { title: 'Servicios', url: "/servicios" },
+                { title: 'Citas', url: "/servicios/citas" },
                 { title: 'Citas Formulario' }
             ]
         },

@@ -43,7 +43,7 @@ export const ROUTES: RouteInfo[] = [
                 label: '',
                 labelClass: '',
                 title: 'Citas',
-                icon: 'mdi mdi-adjust',
+                icon: 'mdi mdi-calendar',
                 class: '',
                 extralink: false,
                 submenu: []

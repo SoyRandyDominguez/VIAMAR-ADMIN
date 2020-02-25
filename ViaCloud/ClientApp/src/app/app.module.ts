@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';  
 
 import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -48,7 +48,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SidebarComponent,
         LoginComponent
     ],
-    imports: [
+    imports: [ 
         JwtModule.forRoot({
             config: { 
                 tokenGetter: tokenGetter, 

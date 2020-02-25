@@ -13,6 +13,6 @@ namespace Public.DataAccess.Query
                             inner join Compania c on c.id = s.CompaniaID
                             where u.ID = @usuarioID";
 
-
+        public static string exec_procedure_GethorasDisponibleCita = @" EXEC GethorasDisponibleCita @sucursalID , @FechaCita";
     }
 }

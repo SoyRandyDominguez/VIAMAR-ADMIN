@@ -1,5 +1,6 @@
 ﻿using Public.DataAccess;
 using Public.DataAccess.Models;
+using Servicios.Model;
 using Servicios.Model.ViewModel;
 using Servicios.Query;
 using System;
@@ -27,6 +28,65 @@ namespace Servicios.Repository
             }
             return response;
         }
+
+        public static int CrearCita(Cita cita)
+        {
+            try
+            {
+                var results = QueryObject<int>(CitaQuery.insertCita, cita);
+
+                if (results.Count > 0)
+                {
+                    return results[0];
+                }
+
+                throw new Exception("No se pudo generar la cita.");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public static void UpdateCita(Cita cita)
+        {
+            try
+            {
+                var results = QueryObject<Cita>(CitaQuery.updateCita, cita);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public static string ValidaLimiteCitaPorHora(Cita cita)
+        {
+            try
+            {
+                var results = QueryObject<string>(CitaQuery.exec_procedure_Validahoralimitecita,
+                    new { cita.SucursalID, cita.FechaCita, cita.HoraCita, TipoCita = cita.CitaTipoID });
+
+                if (results.Count > 0)
+                {
+                    return results[0];
+                }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public static Cita GetCitaByCitaID(int citaID)
+        {
+            var results = QueryObject<Cita>(CitaQuery.getCitaByIDOnly, new { citaID });
+            return results.Count > 0 ? results[0] : null;
+        }
+
 
 
     }

@@ -21,7 +21,7 @@ namespace ViaCloud.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class CitaController : ControllerBase
+    public class ComboBoxController : ControllerBase
     {
 
         [HttpPost, Route("GetCitas")]
