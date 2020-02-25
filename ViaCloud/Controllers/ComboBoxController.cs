@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Authentication.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Public.DataAccess.Models;
-using Servicios.Logic;
-using Servicios.Model;
-using Servicios.Model.ViewModel;
-using Servicios.Repository;
-using Usuarios.Model;
-using Usuarios.Repository;
+using Public.DataAccess.Repository;
+using Public.Model;
+
 
 namespace ViaCloud.Controllers
 {
@@ -24,28 +14,51 @@ namespace ViaCloud.Controllers
     public class ComboBoxController : ControllerBase
     {
 
-        [HttpPost, Route("GetCitas")]
-        public ResponseContenido<CitaForList> GetCitas(RequestContenido<CitaForList> request)
+        [HttpPost]
+        [Route("GetHorasDisponiblesCita")]
+        public ResponseContenido<ComboBox> GetHorasDisponiblesCita(RequestContenido<ComboBox> rq)
         {
-            var response = CitaRepository.getAllCitas(request);
+            var response = ComboBoxRepository.GetHorasDisponiblesCita(rq);
             return response;
         }
 
         [HttpPost]
-        [Route("CrearCita")]
-        public ResponseContenido<Cita> CrearCita(RequestContenido<Cita> request)
+        [Route("GetSintomasComboBox")]
+        public ResponseContenido<ComboBox> GetSintomasComboBox(RequestContenido<ComboBox> rq)
         {
-            var response = CitaLogic.CrearCita(request);
-            return response;
+            return ComboBoxRepository.GetSintomasComboBox(rq);
+        }
+        [HttpPost]
+        [Route("GetChasisPorCliente")]
+        public ResponseContenido<ComboBox> GetChasisPorCliente(RequestContenido<ComboBox> rq)
+        {
+            return ComboBoxRepository.GetChasisPorCliente(rq);
+        }
+        [HttpPost]
+        [Route("GetDocumentosTipo")]
+        public ResponseContenido<ComboBox> GetDocumentosTipo(RequestContenido<ComboBox> rq)
+        {
+            return ComboBoxRepository.GetDocumentosTipo(rq);
         }
 
         [HttpPost]
-        [Route("UpdateCita")]
-        public ResponseContenido<Cita> UpdateCita(RequestContenido<Cita> request)
+        [Route("GetClientesComboBox")]
+        public ResponseContenido<ComboBox> GetClientesComboBox(RequestContenido<ComboBox> rq)
         {
-            var response = CitaLogic.UpdateCita(request);
-            return response;
+            return ComboBoxRepository.GetClientesComboBox(rq);
         }
 
+        [HttpPost]
+        [Route("GetServiciosComboBox")]
+        public ResponseContenido<ComboBox> GetServiciosComboBox(RequestContenido<ComboBox> rq)
+        {
+            return ComboBoxRepository.GetServiciosComboBox(rq);
+        }
+        [HttpPost]
+        [Route("GetChasisByID")]
+        public ResponseContenido<ComboBox> GetChasisByID(RequestContenido<ComboBox> rq)
+        {
+            return ComboBoxRepository.GetChasisByID(rq);
+        }
     }
 }

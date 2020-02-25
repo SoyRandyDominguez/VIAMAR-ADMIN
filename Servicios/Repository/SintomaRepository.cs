@@ -37,6 +37,17 @@ namespace Servicios.Repository
             }
         }
 
+        public static List<SintomaViewModel> GetSintomasByCitaID(int CitaID)
+        {
+            try
+            {
+                return QueryObject<SintomaViewModel>(SintomaQuerys.selectAllSintomasByCitaID, new { CitaID });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
 }

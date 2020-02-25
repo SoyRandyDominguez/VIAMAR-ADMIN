@@ -23,6 +23,12 @@ namespace ViaCloud.Controllers
     [Route("api/[controller]")]
     public class CitaController : ControllerBase
     {
+        [HttpPost]
+        [Route("GetCitaByCitaID")]
+        public ResponseContenido<Cita> GetCitaByCitaID(RequestContenido<Cita> request)
+        {
+            return CitaLogic.GetCitaByCitaID(request);
+        }
 
         [HttpPost, Route("GetCitas")]
         public ResponseContenido<CitaForList> GetCitas(RequestContenido<CitaForList> request)

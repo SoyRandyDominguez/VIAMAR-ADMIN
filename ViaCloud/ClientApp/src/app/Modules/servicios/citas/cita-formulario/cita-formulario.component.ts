@@ -44,17 +44,12 @@ export class CitaFormularioComponent implements OnInit {
 
     ngOnInit() {
         this.CreateForm();
-        //this.getClientes();
-        //this.getTipoCita();
-        //this.getSintomasComboBox();
-        //this.getServicios();
-        //this.getHoraActual();
+        this.getClientes();
+        this.getSintomasComboBox();
+        this.getServicios();
+        this.getHoraActual();
         let citaID = Number(this.route.snapshot.paramMap.get('id'));
-
-        
-
-
-        //citaID > 0 ? this.getCitaByID(citaID) : this.sintomasCita.push(new SintomaViewModel());
+        citaID > 0 ? this.getCitaByID(citaID) : this.sintomasCita.push(new SintomaViewModel());
     }
 
 
@@ -132,7 +127,7 @@ export class CitaFormularioComponent implements OnInit {
         ];
 
         this.httpService.DoPost<Cita>(DataApi.Cita,
-            "getCitaByID", parametros).subscribe(response => {
+            "GetCitaByCitaID", parametros).subscribe(response => {
 
                 if (!response.ok) {
                     this.toastService.Danger(response.errores[0]);
@@ -146,7 +141,7 @@ export class CitaFormularioComponent implements OnInit {
                         this.actualizandoCita = true;
                     } else {
                         this.toastService.Warning("Cita no encontrada");
-                        this.router.navigateByUrl('/cita');
+                        this.router.navigateByUrl('/servicios/citas');
                     }
                 }
 
@@ -162,7 +157,7 @@ export class CitaFormularioComponent implements OnInit {
         ];
 
         this.httpService.DoPost<ComboBox>(DataApi.ComboBox,
-            "SintomasComboBox", parametros).subscribe(response => {
+            "GetSintomasComboBox", parametros).subscribe(response => {
 
                 if (!response.ok) {
                     this.toastService.Danger(response.errores[0]);
@@ -203,7 +198,7 @@ export class CitaFormularioComponent implements OnInit {
             { key: "sucursalID", value: this.authService.tokenDecoded.primarygroupsid }
         ];
         this.httpService.DoPost<ComboBox>(DataApi.ComboBox,
-            "ClientesComboBox", parametros).subscribe(response => {
+            "GetClientesComboBox", parametros).subscribe(response => {
 
                 if (!response.ok) {
                     this.toastService.Danger(response.errores[0]);
@@ -222,7 +217,7 @@ export class CitaFormularioComponent implements OnInit {
         this.Cargando = true;
         let parametros: Parametro[] = [{ key: "clienteID", value: clienteID }];
         this.httpService.DoPost<ComboBox>(DataApi.ComboBox,
-            "chasisPorCliente", parametros).subscribe(response => {
+            "GetChasisPorCliente", parametros).subscribe(response => {
 
                 if (!response.ok) {
                     this.toastService.Danger(response.errores[0]);
@@ -240,10 +235,10 @@ export class CitaFormularioComponent implements OnInit {
     getServicios() {
         this.Cargando = true;
         let parametros: Parametro[] = [
-            { key: "sucursalID", value: this.authService.tokenDecoded.primarygroupsid}
+            { key: "sucursalID", value: this.authService.tokenDecoded.primarygroupsid }
         ];
         this.httpService.DoPost<ComboBox>(DataApi.ComboBox,
-            "ServiciosComboBox", parametros).subscribe(response => {
+            "GetServiciosComboBox", parametros).subscribe(response => {
 
                 if (!response.ok) {
                     this.toastService.Danger(response.errores[0]);
@@ -283,33 +278,12 @@ export class CitaFormularioComponent implements OnInit {
             { key: "sucursalID", value: this.authService.tokenDecoded.primarygroupsid },
             { key: "fechaCita", value: this.f.fechaCita.value }];
         this.httpService.DoPost<ComboBox>(DataApi.ComboBox,
-            "HorasDisponiblesCita", parametros).subscribe(response => {
+            "GetHorasDisponiblesCita", parametros).subscribe(response => {
 
                 if (!response.ok) {
                     this.toastService.Danger(response.errores[0]);
                 } else {
                     this.horasDisponibles = response.records;
-                }
-
-                this.Cargando = false;
-            }, error => {
-                this.Cargando = false;
-                this.toastService.MostrarMensajeDeErrorConexionServidor();
-            });
-    }
-
-    getTipoCita() {
-        this.Cargando = true;
-        let parametros: Parametro[] = [
-            { key: "sucursalID", value: this.authService.tokenDecoded.primarygroupsid}
-        ];
-        this.httpService.DoPost<ComboBox>(DataApi.ComboBox,
-            "TipoCitaComboBox", parametros).subscribe(response => {
-
-                if (!response.ok) {
-                    this.toastService.Danger(response.errores[0]);
-                } else {
-                    this.citaTipos = response.records;
                 }
 
                 this.Cargando = false;

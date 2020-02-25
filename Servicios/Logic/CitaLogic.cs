@@ -11,6 +11,31 @@ namespace Servicios.Logic
 {
     public class CitaLogic
     {
+       
+        public static ResponseContenido<Cita> GetCitaByCitaID(RequestContenido<Cita> request)
+        {
+            var response = new ResponseContenido<Cita>();
+            try
+            {
+                string citaIDString = request.Parametros.Find(p => p.Key == "citaID").Value.ToString();
+                int.TryParse(citaIDString, out int citaID);
+
+                Cita cita = CitaRepository.GetCitaByCitaID(citaID);
+
+                if (cita != null)
+                {
+                    response.Records.Add(cita);
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.OK = false;
+                response.Errores.Add(e.Message);
+            }
+            return response;
+        }
+
 
         public static ResponseContenido<Cita> CrearCita(RequestContenido<Cita> request)
         {

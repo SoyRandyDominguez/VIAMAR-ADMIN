@@ -82,7 +82,7 @@
         </div>
         <!-- <h6 class="card-subtitle">Create responsive tables by wrapping any <code>.table</code> in <code>.table-responsive </code></h6>-->
         <div class="table-responsive">
-          <table class="table">
+          <table class="table table-hover">
             <thead>
               <tr>
                 <th>#</th>
@@ -112,7 +112,7 @@
                 </td>
                 <td><span class="text-muted"><i class="far fa-calendar"></i> {{cita.fechaCita  | date:'dd/MM/yy' }}</span> </td>
                 <td><span class="text-muted"><i class="far fa-clock"></i> {{cita.horaCita}}</span> </td>
-
+                <td><button class="btn btn-sm btn-info" routerLink="/servicios/citas/{{cita.citaID}}"><i class="fa fa-edit"></i></button></td>
               </tr>
 
             </tbody>

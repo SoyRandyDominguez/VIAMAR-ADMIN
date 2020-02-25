@@ -4,18 +4,19 @@
       <div class="card-body">
         <h4 class="card-title">Formulario de la cita</h4>
         <!--<h6 class="card-subtitle">Just add <code>form-material</code> class to the form that's it.</h6>-->
-        <form class="form-row m-t-40">
+        <form class="form-row m-t-40" [formGroup]="Formulario" (ngSubmit)="onSubmit()">
 
           <!--cliente-->
           <div class="form-group col-md-12">
             <label for="inputEmail4">Cliente</label>
-            <ng-select bindLabel="n"
-                       bindValue="n"
-                       [items]="items"
+            <ng-select bindLabel="nombre"
+                       bindValue="codigo"
+                       [items]="clientes"
                        (change)="onSelectCliente($event)"
                        (clear)="onClearCliente($event)"
                        [ngClass]="{'form-control border-danger p-0' : submitted && f.clienteID.errors }"
-                       notFoundText="No resultados">
+                       notFoundText="No resultados"
+                       formControlName="clienteID">
             </ng-select>
             <div *ngIf="submitted && f.clienteID.errors" class="text-danger small animated animated--fade-in">
               <div *ngIf="f.clienteID.errors.required  ">El campo es obligatorio</div>
@@ -23,45 +24,85 @@
           </div>
           <div class="form-group col-12">
             <label for="example-email">Vehículo</label>
-            <input type="email" class="form-control">
+            <ng-select [items]="vehiculos"
+                       bindLabel="nombre"
+                       bindValue="codigo"
+                       [ngClass]="{'form-control border-danger p-0' : submitted && f.vehiculoID.errors }"
+                       notFoundText="No resultados"
+                       formControlName="vehiculoID">
+            </ng-select>
           </div>
           <div class="form-group col-6">
             <label>Fecha de cita</label>
-            <input type="password" class="form-control">
+            <input class="form-control"
+                   readonly
+                   [ngClass]="{'form-control border-danger p-0' : submitted && f.fechaCita.errors }"
+                   formControlName="fechaCita"
+                   [min]="fechaActual"
+                   (dateTimeChange)="dateTimeChange($event.value)">
+            <!--   <owl-date-time #dt [pickerType]="'calendar'"></owl-date-time>-->
+            <div *ngIf="submitted && f.fechaCita.errors" class="text-danger small animated animated--fade-in">
+              <div *ngIf="f.fechaCita.errors.required">El campo es obligatorio</div>
+            </div>
           </div>
           <div class="form-group col-6">
             <label>Hora de cita</label>
-            <ng-select bindLabel="n"
-                       bindValue="n"
-                       [items]="items"
-                       (change)="onSelectCliente($event)"
-                       (clear)="onClearCliente($event)"
-                       [ngClass]="{'form-control border-danger p-0' : submitted && f.clienteID.errors }"
-                       notFoundText="No resultados">
+            <ng-select [items]="horasDisponibles"
+                       bindLabel="nombre"
+                       bindValue="nombre"
+                       groupBy="grupo"
+                       [searchable]="false"
+                       [ngClass]="{'form-control border-danger p-0' : submitted && f.horaCita.errors }"
+                       notFoundText="No resultados"
+                       formControlName="horaCita">
             </ng-select>
+            <div *ngIf="submitted && f.horaCita.errors" class="text-danger small animated animated--fade-in">
+              <div *ngIf="f.horaCita.errors.required  ">El campo es obligatorio</div>
+            </div>
           </div>
           <div class="form-group col-12">
             <label>Servicio</label>
-            <input type="text" class="form-control form-control-line">
+            <ng-select [items]="servicios"
+                       bindLabel="nombre"
+                       bindValue="codigo"
+                       [ngClass]="{'form-control border-danger p-0' : submitted && f.servicioTipoID.errors }"
+                       notFoundText="No resultados"
+                       formControlName="servicioTipoID">
+            </ng-select>
+            <div *ngIf="submitted && f.servicioTipoID.errors" class="text-danger small animated animated--fade-in">
+              <div *ngIf="f.servicioTipoID.errors.required  ">El campo es obligatorio</div>
+            </div>
           </div>
+
+          <hr />
           <div class="form-group col-12">
-            <hr />
             <h5>Síntomas de la cita</h5>
           </div>
-          <div class="form-group col-md-8">
-            <label>Detalle</label>
-            <input type="password" class="form-control">
-          </div>
-          <div class="form-group col-md-4">
-            <label>Categoría</label>
-            <ng-select bindLabel="n"
-                       bindValue="n"
-                       [items]="items"
-                       (change)="onSelectCliente($event)"
-                       (clear)="onClearCliente($event)"
-                       [ngClass]="{'form-control border-danger p-0' : submitted && f.clienteID.errors }"
-                       notFoundText="No resultados">
-            </ng-select>
+          <div class="form-row w-100" *ngFor="let sintoma of sintomasCita; let i = index">
+
+            <!--descripcion-->
+            <div class="form-group col-md-8">
+              <label for="inputEmail4">Descripción</label>
+              <div class="input-group mb-2">
+                <input type="text" class="form-control" [(ngModel)]="sintomasCita[i].descripcion" [ngModelOptions]="{standalone: true}">
+                <div class="input-group-prepend">
+                  <button type="button" class="btn btn-danger" (click)="onDeleteSintoma(i)"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!--Categoría-->
+            <div class="form-group col-md-4">
+              <label for="inputEmail4">Categoría</label>
+              <ng-select [items]="sintomasCategorias"
+                         bindLabel="nombre"
+                         bindValue="codigo"
+                         [(ngModel)]="sintomasCita[i].sintomaID"
+                         [ngModelOptions]="{standalone: true}"
+                         notFoundText="No resultados">
+              </ng-select>
+            </div>
+
           </div>
           <div class="col-md-12 text-center">
             <button class="btn btn-lg btn-success rounded-circle" type="button"><i class="fa fa-plus"></i></button>

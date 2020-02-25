@@ -16,13 +16,34 @@ namespace Servicios.Query
                                                                                                     v.Marca  like '%' + @busquedaText + '%'  ";
 
 
-        public static string insertCita = @" select * from VCitasListado v where
-                                                                                                    v.Cliente like '%' + @busquedaText + '%' or 
-                                                                                                    v.Modelo  like '%' + @busquedaText + '%'  or
-                                                                                                    v.chasis  like '%' + @busquedaText + '%'  or
-                                                                                                    v.documento  like '%' + @busquedaText + '%'  or
-                                                                                                    v.Servicio  like '%' + @busquedaText + '%'  or
-                                                                                                    v.Marca  like '%' + @busquedaText + '%'  ";
+        public static string insertCita = @" INSERT INTO [dbo].[Cita]
+                                                                       ([SucursalID]
+                                                                       ,[ClienteID]
+                                                                       ,[FechaRegistro]
+                                                                       ,[FechaCita]
+                                                                       ,[HoraCita]
+                                                                       ,[ServicioTipoID]
+                                                                       ,[VehiculoID]
+                                                                       ,[UsuarioCreadorID]
+                                                                       ,[EstadoID]
+                                                                       ,[Combustible]
+                                                                       ,[CitaTipoID]
+                                                                       ,[UsuarioRecibeID] )
+                                                                 VALUES
+                                                                       (@SucursalID 
+                                                                       ,@ClienteID 
+                                                                       ,getdate()
+                                                                       ,@FechaCita
+                                                                       ,@HoraCita
+                                                                       ,@ServicioTipoID 
+                                                                       ,@VehiculoID 
+                                                                       ,@UsuarioCreadorID 
+                                                                       ,@EstadoID 
+                                                                       ,@Combustible 
+                                                                       ,@CitaTipoID 
+                                                                       ,@UsuarioRecibeID   )
+                                                                    
+                                                            SELECT @@IDENTITY ";
 
 
 
