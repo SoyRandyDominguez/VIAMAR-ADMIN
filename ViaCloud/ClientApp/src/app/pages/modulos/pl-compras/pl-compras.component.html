@@ -21,14 +21,13 @@
                         <mat-label>Procedencia</mat-label>
                         <ng-select [items]="marcaProcedencia" bindLabel="nombre" groupBy="grupo"
                             [(ngModel)]="selectedProcedencia">
-                           
+
                         </ng-select>
                     </div>
-                    
-                    <div class="col-md-3 mt-2">
+                        
+                    <div class="col-md-3 m-2">
                         <mat-label>Año</mat-label>
-                        <ng-select [items]="years" bindLabel="name" bindValue="name" 
-                            [(ngModel)]="selectedAnio">
+                        <ng-select [items]="years" bindLabel="name" bindValue="name" [(ngModel)]="selectedAnio">
                             <ng-template ng-optgroup-tmp let-item="item">
                                 {{item.country || 'Unnamed group'}}
                             </ng-template>
@@ -38,187 +37,98 @@
                 <div class="row">
                     <div class="col">
                         <mat-tab-group>
-                            <mat-tab [label]="item.nombreProd" *ngFor="let item of productos; let i = index;">
+                            <mat-tab [label]="item.articulo" *ngFor="let item of productos; let i = index;">
                                 <div class="p-6">
                                     <div class="row">
                                         <div class="col">
-                                            <table mat-table [dataSource]="item.plComprasValores">
 
-                                                <ng-container matColumnDef="tipo" sticky>
-                                                    <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                                                    <td mat-cell *matCellDef="let element" style="font-weight:800;">
-                                                        {{element.tipo}}
-                                                    </td>
-                                                </ng-container>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th *ngFor="let col of displayedColumns">{{col}}</th>
+                                                    </tr>
+                                                </thead>
 
-                                                <ng-container matColumnDef="enero">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Enero
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.enero"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
+                                                <tbody>
+                                                    <tr *ngFor="let val of item.rundowns">
+                                                        <td>{{val.rundown}}</td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.enero">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.febrero">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.marzo">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.abril">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.mayo">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.junio">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.julio">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.agosto">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.septiembre">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.octubre">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.noviembre">
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field appearance="standard"
+                                                                class="vex-flex-form-field" color="primary">
+                                                                <input matInput [(ngModel)]="val.valores.diciembre">
+                                                            </mat-form-field>
+                                                        </td>
+                                                    </tr>
 
-                                                <ng-container matColumnDef="febrero">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Febrero
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.febrero"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-                                                <ng-container matColumnDef="marzo">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Marzo
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.marzo"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-
-                                                <ng-container matColumnDef="abril">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Abril
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.abril"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-
-                                                <ng-container matColumnDef="mayo">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;"> Mayo
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.mayo"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-                                                <ng-container matColumnDef="junio">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Junio
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.junio"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-
-
-                                                <ng-container matColumnDef="julio">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Julio
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.julio"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-
-
-                                                <ng-container matColumnDef="agosto">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Agosto
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.agosto"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-
-
-                                                <ng-container matColumnDef="septiembre">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Septiembre </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.septiembre"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-
-                                                <ng-container matColumnDef="octubre">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Octubre
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.octubre"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-
-                                                <ng-container matColumnDef="noviembre">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Noviembre </th>
-                                                    <td mat-cell *matCellDef="let element" style="font-weight:800;">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.noviembre"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-
-
-                                                <ng-container matColumnDef="diciembre">
-                                                    <th mat-header-cell *matHeaderCellDef style="font-weight:800;">
-                                                        Diciembre </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        <mat-form-field appearance="outline" class="vex-flex-form-field"
-                                                            color="primary">
-                                                            <input matInput [(ngModel)]="element.diciembre"
-                                                                (ngModelChange)="guardarLocal()">
-                                                        </mat-form-field>
-                                                    </td>
-                                                </ng-container>
-                                                <tr mat-header-row *matHeaderRowDef="displayedColumns ;sticky: true">
-                                                </tr>
-                                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                                </tbody>
                                             </table>
+
                                         </div>
                                     </div>
 

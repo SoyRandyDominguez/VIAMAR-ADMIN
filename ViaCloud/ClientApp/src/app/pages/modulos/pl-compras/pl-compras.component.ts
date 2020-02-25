@@ -15,6 +15,8 @@ import { ComboBox } from 'src/app/core/models/Api/ComboBox.model';
 })
 export class PlComprasComponent implements OnInit {
 
+    productos: productosRundown[] = [];
+
     years = [];
     selectedProcedencia: ComboBox = { codigo: "1", nombre: 'Ford / Canada', grupoID: 1, grupo: 'Canada', disabled: false };
     selectedAnio = "2020"
@@ -29,20 +31,108 @@ export class PlComprasComponent implements OnInit {
 
 
 
+    displayedColumns =
+        [
+        'Tipo', 
+        'Enero', 
+        'Febrero', 
+        'Marzo', 
+        'Abril', 
+        'Mayo', 
+        'Junio', 
+        'Julio', 
+        'Agosto', 
+        'Septiembre', 
+        'Octubre', 
+        'Noviembre', 
+        'Diciembre', 
+        ];
+
+    ELEMENT_DATA: PeriodicElement[] = [
+        { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+        { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+        { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+        { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+        { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+        { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+        { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+        { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+        { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+        { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+    ];
+    dataSource = [];
 
 
 
 
-    displayedColumns = [
-        'tipo', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-
-
-    dataSource = ELEMENT_DATA;
 
 
 
     constructor() { }
+
+
+
+    ngOnInit() {
+
+        this.getYears(2000);
+
+        this.rundownMapper([
+            {
+                rundownID: 1, tipoRundownId: 1, rundown: 'Order', companiaId: 1,
+                companiaNombre: 'Viamar SA', anioId: 122, anio: '2021', marcaId: 1, marcaNombre: 'Ford',
+                articuloId: 1, articulo: 'Ecosport',
+                valores: '{     "enero":0,     "febrero":0,     "marzo":0,     "abril":0,     "mayo":0,     "junio":2,     "julio":0,     "agosto":0,     "septiembre":0,     "octubre":0,     "noviembre":0,     "diciembre":0  }'
+            },
+            {
+                rundownID: 2, tipoRundownId: 2, rundown: 'Shipments ', companiaId: 1,
+                companiaNombre: 'Viamar SA', anioId: 122, anio: '2021', marcaId: 1, marcaNombre: 'Ford',
+                articuloId: 1, articulo: 'Ecosport',
+                valores: '{     "enero":0,     "febrero":0,     "marzo":0,     "abril":0,     "mayo":0,     "junio":2,     "julio":0,     "agosto":0,     "septiembre":0,     "octubre":0,     "noviembre":0,     "diciembre":0  }'
+            },
+            {
+                rundownID: 3, tipoRundownId: 1, rundown: 'Shipments ', companiaId: 1,
+                companiaNombre: 'Viamar SA', anioId: 122, anio: '2021', marcaId: 1, marcaNombre: 'Mazda',
+                articuloId: 3, articulo: 'VEGETA',
+                valores: '{     "enero":0,     "febrero":0,     "marzo":0,     "abril":0,     "mayo":0,     "junio":0,     "julio":0,     "agosto":0,     "septiembre":0,     "octubre":0,     "noviembre":0,     "diciembre":0  }'
+            }
+        ]);
+        console.log(this.productos);
+
+
+            
+
+
+    }
+
+    getDataSource(rundowns:rundown[]){
+        let retorno = [];
+        rundowns.forEach(z => {
+
+            let o = {
+                tipo: z.rundown,
+                enero: z.valores.enero,
+                febrero: z.valores.febrero,
+                marzo: z.valores.marzo,
+                abril: z.valores.abril,
+                mayo: z.valores.mayo,
+                junio: z.valores.junio,
+                julio: z.valores.julio,
+                agosto: z.valores.agosto,
+                septiembre: z.valores.septiembre,
+                octubre: z.valores.octubre,
+                noviembre: z.valores.noviembre,
+                diciembre: z.valores.diciembre,
+            }
+            // console.table(o);
+            retorno.push(o);
+        });
+
+        return retorno;
+    }
+
+
+
+
 
 
     getYears(startYear) {
@@ -55,16 +145,6 @@ export class PlComprasComponent implements OnInit {
         this.years = years;
     }
 
-    ngOnInit() {
-
-        this.test();
-        this.getYears(2000);
-
-        if (localStorage.getItem('PLC') != null) {
-            // this.productos = JSON.parse(localStorage.getItem('PLC'));
-        }
-
-    }
     guardarLocal() {
 
         //console.log(this.productos);
@@ -93,50 +173,41 @@ export class PlComprasComponent implements OnInit {
                 }
             );
         });
-        return result;
-    }
+        // var groupArray = require('group-array');
+        //  console.log(  groupArray(result, 'articulo'));
 
-
-
-    test() {
-
-
-        const array: rundown[] =
-            this.rundownMapper([
-                {
-                    rundownID: 1, tipoRundownId: 1, rundown: 'Order', companiaId: 1,
-                    companiaNombre: 'Viamar SA', anioId: 122, anio: '2021', marcaId: 1, marcaNombre: 'Ford',
-                    articuloId: 1, articulo: 'Ecosport',
-                    valores: '{     "enero":0,     "febrero":0,     "marzo":0,     "abril":0,     "mayo":0,     "junio":2,     "julio":0,     "agosto":0,     "septiembre":0,     "octubre":0,     "noviembre":0,     "diciembre":0  }'
-                },
-                {
-                    rundownID: 2, tipoRundownId: 2, rundown: 'Shipments ', companiaId: 1,
-                    companiaNombre: 'Viamar SA', anioId: 122, anio: '2021', marcaId: 1, marcaNombre: 'Ford',
-                    articuloId: 2, articulo: 'Ecosport',
-                    valores: '{     "enero":0,     "febrero":0,     "marzo":0,     "abril":0,     "mayo":0,     "junio":2,     "julio":0,     "agosto":0,     "septiembre":0,     "octubre":0,     "noviembre":0,     "diciembre":0  }'
-                }
-            ]);
-
-
-        const result = [];
-        const map = new Map();
-        for (const item of array) {
-            if (!map.has(item.articuloId)) {
-                map.set(item.articuloId, true);    // set any value to Map
-                result.push({
-                    articuloId: item.articuloId,
-                    articulo: item.articulo,
-                    valores: item.valores
-                });
+        var groups = {};
+        for (var i = 0; i < result.length; i++) {
+            var groupName = result[i].articulo;
+            if (!groups[groupName]) {
+                groups[groupName] = [];
             }
+            groups[groupName].push(result[i]);
         }
-        console.table(result)
+        //    let resultado:productosRundown[] = [];
+        for (var groupName in groups) {
+            this.productos.push({ articulo: groupName, rundowns: groups[groupName] });
+        }
+
+        // console.log(resultado);
+
+
     }
+
+
+
+
+
 
 
 
 }
 
+export class productosRundown {
+    articulo: string;
+    rundowns: rundown[];
+
+}
 
 
 export interface PlElement {
@@ -157,18 +228,13 @@ export interface PlElement {
 
 }
 
-const ELEMENT_DATA: PlElement[] = [
-    { tipo: 'Order', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'Production', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'Shiptments', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'Arrivsl', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'Sales', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'Stock', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'MOS (+3)', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'MOS (-3)', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'MOS (+6)', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-    { tipo: 'MOS (-6)', enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0 },
-];
+export interface PeriodicElement {
+    name: string;
+    position: number;
+    weight: number;
+    symbol: string;
+}
+
 
 
 
@@ -207,18 +273,14 @@ export class rundown {
 
 
 
-export class ProductosPLCompras {
 
-    productoID: number;
-    nombreProd: String;
-    plComprasValores: PlElement[]
-
+export class Productos {
+    productoId: number;
+    productoNombre: string;
+    valores: Cantidades
 }
 
-export class PLComprasValores {
-    nombre: string;
-    values: Cantidades[];
-}
+
 export class Cantidades {
     enero: number;
     febrero: number;
