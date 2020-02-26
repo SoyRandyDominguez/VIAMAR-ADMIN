@@ -46,7 +46,6 @@ export class BackendService {
         request.pagina.paginaSize = PaginaSize;
         request.pagina.ordenAsc = OrderASC;
         request.pagina.ordenColumna = Columna;
-        console.log(request)
         return this.http.post<ResponseContenido<T>>(this.baseUrl + dataApiRootMap[api] + "/" + Method, request);
     }
 

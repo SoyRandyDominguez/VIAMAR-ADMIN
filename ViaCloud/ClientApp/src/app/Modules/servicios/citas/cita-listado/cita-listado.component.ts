@@ -56,8 +56,6 @@ export class CitaListadoComponent implements OnInit {
 
                 if (x.ok) {
                     this.citas = x.records;
-                    console.table(x.records);
-                    console.table(x);
                     this.asignarPagination(x);
                 } else {
                     this.toast.Danger(x.errores[0]);

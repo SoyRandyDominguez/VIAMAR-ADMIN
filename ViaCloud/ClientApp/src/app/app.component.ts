@@ -23,17 +23,17 @@ export class AppComponent implements AfterViewInit {
 
     ngOnInit() {
         this.authenticationService.setDecodeToken();
-        if (!this.authenticationService.loggedIn()) {
-            this.router.navigate(['/login']);
-        } else {
-            this.authenticationService.setPermissions();
-            console.table(this.authenticationService.tokenDecoded)
-        }
+        //if (!this.authenticationService.loggedIn()) {
+        //    this.router.navigate(['/login']);
+        //} else {
+        //    this.authenticationService.setPermissions();
+        //}
     }
 
     ngAfterViewInit() {
         this.router.events
             .subscribe((event) => {
+                 
                 if (event instanceof NavigationStart) {
                     this.loading = true;
                 }
@@ -43,6 +43,12 @@ export class AppComponent implements AfterViewInit {
                 ) {
                     this.loading = false;
                 }
+
+                //if (!this.authenticationService.loggedIn()) {
+                //    this.router.navigate(['/login']);
+                //}
+
+
             });
     }
 

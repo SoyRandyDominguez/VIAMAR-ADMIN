@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterContentChecked, AfterViewChecked } from '@angular/core';
 import { ComboBox } from '../../../../shared/model/ComboBox';
 import { SintomaViewModel } from '../../model/SintomaViewModel';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -16,6 +16,7 @@ import { Cita } from '../../model/Cita';
     styleUrls: ['./cita-formulario.component.css']
 })
 export class CitaFormularioComponent implements OnInit {
+
 
     clientes: ComboBox[] = [];
     vehiculos: ComboBox[] = [];
@@ -49,8 +50,18 @@ export class CitaFormularioComponent implements OnInit {
         this.getServicios();
         this.getHoraActual();
         let citaID = Number(this.route.snapshot.paramMap.get('id'));
-        citaID > 0 ? this.getCitaByID(citaID) : this.sintomasCita.push(new SintomaViewModel());
+
+        if (citaID > 0) {
+            this.getCitaByID(citaID);
+            this.actualizandoCita = true;
+
+        } else {
+            this.sintomasCita.push(new SintomaViewModel());
+        }
+
     }
+
+
 
 
     private CreateForm() {
@@ -90,13 +101,15 @@ export class CitaFormularioComponent implements OnInit {
         this.guardarCitaySintomas();
     }
 
-    dateTimeChange(valor: any) {
-        this.f.horaCita.setValue(null);
-        this.getHorasDisponibles();
+    dateTimeChange(event) {
+        if (event.isInteracted) {
+            this.f.horaCita.setValue(null);
+        }
+        this.getHorasDisponibles(event.value);
     }
 
     guardarCitaySintomas() {
-        let metodo: string = this.actualizandoCita ? "UpdateCitaByID" : "CrearCita";
+        let metodo: string = this.actualizandoCita ? "UpdateCita" : "CrearCita";
 
         this.btnGuardarCargando = true;
         let parametros: Parametro[] = [
@@ -110,7 +123,7 @@ export class CitaFormularioComponent implements OnInit {
                     this.toastService.Danger(response.errores[0]);
                 } else {
                     this.toastService.Success();
-                    this.router.navigateByUrl('/cita');
+                    this.router.navigateByUrl('/servicios/citas');
                 }
 
                 this.btnGuardarCargando = false;
@@ -137,7 +150,7 @@ export class CitaFormularioComponent implements OnInit {
                         this.Formulario.setValue(response.records[0]);
                         this.getVehiculosByCliente(response.records[0].clienteID);
                         this.getSintomasByCitaID(citaID);
-                        this.getHorasDisponibles();
+                        this.getHorasDisponibles(this.f.horaCita.value);
                         this.actualizandoCita = true;
                     } else {
                         this.toastService.Warning("Cita no encontrada");
@@ -262,7 +275,6 @@ export class CitaFormularioComponent implements OnInit {
                     this.toastService.Danger(response.errores[0]);
                 } else {
                     this.fechaActual = new Date(response.valores[0]);
-                    this.fechaActual.setHours(this.fechaActual.getHours() - 24);
                 }
 
                 this.Cargando = false;
@@ -272,11 +284,11 @@ export class CitaFormularioComponent implements OnInit {
             });
     }
 
-    getHorasDisponibles() {
+    getHorasDisponibles(fecha) {
         this.Cargando = true;
         let parametros: Parametro[] = [
             { key: "sucursalID", value: this.authService.tokenDecoded.primarygroupsid },
-            { key: "fechaCita", value: this.f.fechaCita.value }];
+            { key: "fechaCita", value: fecha }];
         this.httpService.DoPost<ComboBox>(DataApi.ComboBox,
             "GetHorasDisponiblesCita", parametros).subscribe(response => {
 
@@ -285,7 +297,6 @@ export class CitaFormularioComponent implements OnInit {
                 } else {
                     this.horasDisponibles = response.records;
                 }
-
                 this.Cargando = false;
             }, error => {
                 this.Cargando = false;

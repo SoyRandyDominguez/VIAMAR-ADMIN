@@ -63,9 +63,9 @@ export class AuthenticationService {
 
     logout(): void {
         // remove user from local storage to log user out
-        this.permissionsService.flushPermissions();
         localStorage.removeItem('token');
-        window.location.reload();
+        this.router.navigate(['/login']);
+        this.permissionsService.flushPermissions();
     }
 
     setPermissions(): void {
@@ -74,7 +74,6 @@ export class AuthenticationService {
 
                 if (res.ok) {
                     let permisos: Permiso[] = res.valores[0];
-                    console.table(permisos.map(p => p.nombre));
                     this.permissionsService.loadPermissions(permisos.map(p => p.nombre));
                 } else {
                     //this.toastService.Danger("Error interno! Mensaje: " + res.errores[0]);

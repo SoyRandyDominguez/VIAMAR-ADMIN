@@ -25,6 +25,9 @@ export const Approutes: Routes = [
     },
     {
         path: 'login',
+        data: {
+            title: 'ViaCloud | Login',
+        },
         component: LoginComponent
     },
     //{
