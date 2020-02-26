@@ -7,8 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';  
 import { NgModule } from '@angular/core';   
-import { HttpClientModule } from '@angular/common/http';  
-import { Routes, RouterModule } from '@angular/router';  
+import { HttpClientModule } from '@angular/common/http';   
+import { Routes, RouterModule } from '@angular/router';   
  
 import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap'; 
  

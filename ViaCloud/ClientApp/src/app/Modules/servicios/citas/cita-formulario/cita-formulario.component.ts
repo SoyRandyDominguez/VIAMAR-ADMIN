@@ -52,7 +52,7 @@ export class CitaFormularioComponent implements OnInit {
         let citaID = Number(this.route.snapshot.paramMap.get('id'));
 
         if (citaID > 0) {
-            this.getCitaByID(citaID);
+            this.getCitaByIDForEdit(citaID);
             this.actualizandoCita = true;
 
         } else {
@@ -133,14 +133,14 @@ export class CitaFormularioComponent implements OnInit {
             });
     }
 
-    getCitaByID(citaID: number) {
+    getCitaByIDForEdit(citaID: number) {
         this.Cargando = true;
         let parametros = [
             { key: "citaID", value: citaID },
         ];
 
         this.httpService.DoPost<Cita>(DataApi.Cita,
-            "GetCitaByCitaID", parametros).subscribe(response => {
+            "getCitaByIDForEdit", parametros).subscribe(response => {
 
                 if (!response.ok) {
                     this.toastService.Danger(response.errores[0]);

@@ -99,12 +99,12 @@
             <tbody>
 
               <tr *ngFor="let cita of citas">
-                <td><a href="javascript:void(0)">#{{cita.citaID}}</a></td>
+                <td><span class="badge badge-light text-info">#{{cita.citaID}}</span></td>
                 <td>{{cita.chasis}}</td>
                 <td>{{cita.marca}}</td>
                 <td>{{cita.modelo}}</td>
                 <td>{{cita.documento}}</td>
-                <td>{{cita.cliente}}</td>
+                <td>{{cita.cliente | titlecase}}</td>
                 <td>
                   <div *ngIf="cita.servicio == 'Entrega de vehículo' " class="label label-table label-primary">{{cita.servicio}}</div>
                   <div *ngIf="cita.servicio == 'Taller' " class="label label-table label-success">{{cita.servicio}}</div>
@@ -112,7 +112,7 @@
                 </td>
                 <td><span class="text-muted"><i class="far fa-calendar"></i> {{cita.fechaCita  | date:'dd/MM/yy' }}</span> </td>
                 <td><span class="text-muted"><i class="far fa-clock"></i> {{cita.horaCita}}</span> </td>
-                <td><button class="btn btn-sm btn-info" routerLink="/servicios/citas/{{cita.citaID}}"><i class="fa fa-edit"></i></button></td>
+                <td *ngIf="cita.canEdit" ><button class="btn btn-sm btn-info" routerLink="/servicios/citas/{{cita.citaID}}"><i class="fa fa-edit"></i></button></td>
               </tr>
 
             </tbody>

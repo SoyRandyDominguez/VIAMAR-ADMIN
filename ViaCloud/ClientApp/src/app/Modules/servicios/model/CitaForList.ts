@@ -9,5 +9,6 @@ export class CitaForList {
     servicio: string
     fechaCita: string
     horaCita: string
+    canEdit: boolean
 
 }

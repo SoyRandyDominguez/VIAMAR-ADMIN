@@ -81,9 +81,9 @@ namespace Servicios.Repository
             }
         }
 
-        public static Cita GetCitaByCitaID(int citaID)
+        public static Cita getCitaByIDForEdit(int citaID)
         {
-            var results = QueryObject<Cita>(CitaQuery.getCitaByIDOnly, new { citaID });
+            var results = QueryObject<Cita>(CitaQuery.getCitaByIDForEdit, new { citaID });
             return results.Count > 0 ? results[0] : null;
         }
 

@@ -69,9 +69,10 @@ namespace Servicios.Query
 
         public static string exec_procedure_Validahoralimitecita = @" EXEC Validahoralimitecita @sucursalID , @FechaCita, @horaCita, @tipoCita ";
 
-        public static string getCitaByIDOnly = @" select top 1 ci.* from Cita ci  
+        public static string getCitaByIDForEdit = @"  select top 1 ci.* from Cita ci 
                                                     where ci.ID = @citaID 
-                                                                        ";
+                                                    and
+                                                    ci.FechaCita > CONVERT(date,GETDATE())";
 
     }
 }

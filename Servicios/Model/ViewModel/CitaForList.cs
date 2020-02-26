@@ -16,5 +16,6 @@ namespace Servicios.Model.ViewModel
         public string Servicio { get; set; }
         public DateTime FechaCita { get; set; }
         public string HoraCita { get; set; }
+        public bool CanEdit { get; set; }
     }
 }
