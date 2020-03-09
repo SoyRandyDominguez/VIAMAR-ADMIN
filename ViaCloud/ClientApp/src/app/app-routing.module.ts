@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FullComponent } from './core/layouts/full/full.component';
 import { LoginComponent } from './Modules/login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { BlankComponent } from './core/layouts/blank/blank.component';
 
 export const Approutes: Routes = [
     {
@@ -29,6 +30,18 @@ export const Approutes: Routes = [
             title: 'ViaCloud | Login',
         },
         component: LoginComponent
+    },
+    {
+        path: 'turno',
+        component: BlankComponent,
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        children: [
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            {
+                path: 'home', loadChildren: () => import('./Modules/turno/turno.module').then(m => m.TurnoModule)
+            },
+        ],
     },
     //{
     //    path: '**',
