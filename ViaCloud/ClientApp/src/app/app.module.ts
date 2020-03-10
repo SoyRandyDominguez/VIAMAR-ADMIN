@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';  
 import { NgModule } from '@angular/core';   
-import { HttpClientModule } from '@angular/common/http';    
+import { HttpClientModule } from '@angular/common/http';     
 import { Routes, RouterModule } from '@angular/router';   
  
 import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap'; 
@@ -15,7 +15,7 @@ import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { FullComponent } from './core/layouts/full/full.component'; 
 import { BlankComponent } from './core/layouts/blank/blank.component';
 
-import { NavigationComponent } from './shared/header-navigation/navigation.component';
+import { NavigationComponent } from './shared/header-navigation/navigation.component'; 
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 

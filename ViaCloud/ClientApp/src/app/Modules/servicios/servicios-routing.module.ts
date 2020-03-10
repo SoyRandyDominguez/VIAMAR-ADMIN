@@ -11,7 +11,7 @@ const routes: Routes = [
         data: {
             title: 'ViaCloud | Citas',
             urls: [
-                { title: 'Servicios', url: "/servicios" },
+                { title: 'Servicios', },
                 { title: 'Citas' }
             ]
         },
@@ -20,11 +20,11 @@ const routes: Routes = [
     {
         path: 'citas/:id',
         data: {
-            title: 'ViaCloud | Citas Formulario',
+            title: 'ViaCloud | Formulario de citas',
             urls: [
-                { title: 'Servicios', url: "/servicios" },
+                { title: 'Servicios', },
                 { title: 'Citas', url: "/servicios/citas" },
-                { title: 'Citas Formulario' }
+                { title: 'Formulario de citas' }
             ]
         },
         component: CitaFormularioComponent,

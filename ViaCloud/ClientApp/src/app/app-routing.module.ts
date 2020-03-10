@@ -37,9 +37,9 @@ export const Approutes: Routes = [
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
         children: [
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'servicios', pathMatch: 'full' },
             {
-                path: 'home', loadChildren: () => import('./Modules/turno/turno.module').then(m => m.TurnoModule)
+                path: 'servicios', loadChildren: () => import('./Modules/turno/turno.module').then(m => m.TurnoModule)
             },
         ],
     },

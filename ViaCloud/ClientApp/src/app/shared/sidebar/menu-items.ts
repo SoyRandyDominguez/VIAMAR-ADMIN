@@ -19,6 +19,15 @@ export const ROUTES: RouteInfo[] = [
         labelClass: '',
         extralink: false,
         submenu: []
+    }, {
+        path: '/turno',
+        title: 'Turno',
+        label: '',
+        icon: 'mdi mdi-home',
+        class: '',
+        labelClass: '',
+        extralink: false,
+        submenu: []
     },
     //{
     //  path: '',
