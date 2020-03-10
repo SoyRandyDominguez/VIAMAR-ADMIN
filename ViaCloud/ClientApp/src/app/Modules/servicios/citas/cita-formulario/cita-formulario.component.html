@@ -5,12 +5,16 @@
   </div>
 </div>
 
-
+<div class="row mb-2">
+  <div class="col">
+    <button class="btn btn-light" routerLink="/servicios/citas"><i class="fa fa-arrow-left"></i> Regresar</button>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-8 offset-md-2">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Formulario de la cita</h4>
+        <h4 class="card-title">Formulario de citas</h4>
         <!--<h6 class="card-subtitle">Just add <code>form-material</code> class to the form that's it.</h6>-->
         <form class="form-row m-t-40" [formGroup]="Formulario" (ngSubmit)="onSubmit()">
 

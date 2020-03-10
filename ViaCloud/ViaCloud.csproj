@@ -61,6 +61,7 @@
     <Folder Include="ClientApp\src\app\core\authentication\service\" />
     <Folder Include="ClientApp\src\app\core\http\service\" />
     <Folder Include="ClientApp\src\app\Modules\servicios\citas\" />
+    <Folder Include="ClientApp\src\app\Modules\turno\model\" />
   </ItemGroup>
 
   <ItemGroup>
